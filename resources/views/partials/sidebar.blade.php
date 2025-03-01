@@ -3,8 +3,9 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    {{-- <a href="#"><img src="{{ asset('assets/compiled/svg/logo.svg') }}" alt="Logo" /></a> --}}
-                    <h4 class="mt-2 me-2" style="color: white;"><strong>Simasdalang</strong></h4>
+                    <h4 class="mt-3 me-2" style="color: white; font-size: 20px; white-space: nowrap;">
+                        <strong>SIMASDALANG</strong>
+                    </h4>
                 </div>
                 <div class="theme-toggle d-flex gap-2 align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" viewBox="0 0 21 21">
@@ -18,7 +19,7 @@
                         </g>
                     </svg>
                     <div class="form-check form-switch fs-6">
-                        <input class="form-check-input me-0" type="checkbox" id="toggle-dark" style="cursor: pointer" />
+                        <input class="form-check-input me-0" type="checkbox" id="toggle-dark" style="cursor: pointer">
                         <label class="form-check-label"></label>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="iconify iconify--mdi" width="20" height="20" viewBox="0 0 24 24">
@@ -31,23 +32,44 @@
                 </div>
             </div>
         </div>
+
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
-                <li class="sidebar-item {{ request()->is('user/dashboard*') ? 'active' : '' }}">
-                    <a href="{{ route('user.dashboard') }}" class="sidebar-link">
-                        <i class="bi bi-house-door"></i>
-                        <span>Home</span>
-                    </a>
-                </li>
+                @if(auth()->user()->role == 'admin')
+                    {{-- Sidebar untuk Admin --}}
+                    <li class="sidebar-item {{ request()->is('admin/dashboard*') ? 'active' : '' }}">
+                        <a href="/admin/dashboard" class="sidebar-link">
+                            <i class="bi bi-house-door"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ request()->is('admin/profile*') ? 'active' : '' }}">
+                        <a href="/admin/profile" class="sidebar-link">
+                            <i class="bi bi-person-square"></i>
+                            <span>Profil Peserta</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ request()->is('admin/surat-masuk*') ? 'active' : '' }}">
+                        <a href="/admin/surat-masuk" class="sidebar-link">
+                            <i class="bi bi-envelope"></i>
+                            <span>Surat Masuk</span>
+                        </a>
+                    </li>
 
-                @auth
-                    {{-- <li class="sidebar-title">Data</li> --}}
+                @else
+                    {{-- Sidebar untuk User Biasa --}}
+                    <li class="sidebar-item {{ request()->is('user/dashboard*') ? 'active' : '' }}">
+                        <a href="{{ route('user.dashboard') }}" class="sidebar-link">
+                            <i class="bi bi-house-door"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item {{ request()->is('user/profile*') ? 'active' : '' }}">
                         <a href="{{ route('user.profile.index') }}" class="sidebar-link">
                             <i class="bi bi-person-square"></i>
-                            <span>Profile</span>
+                            <span>Profil</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->is('user/activities*') ? 'active' : '' }}">
@@ -62,8 +84,7 @@
                             <span>Surat Masuk</span>
                         </a>
                     </li>
-                @endauth
-
+                @endif
             </ul>
         </div>
     </div>

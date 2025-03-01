@@ -17,7 +17,7 @@
                                     {{ Auth::check() ? Auth::user()->name : 'Guest' }}
                                 </h6>
                                 <p class="mb-0 text-sm text-gray-600">
-                                    {{ Auth::check() ? (Auth::user()->role == 'admin' ? 'Admin' : 'User') : 'Guest' }}
+                                    {{ Auth::check() ? (Auth::user()->role == 'admin' ? 'Admin' : 'Peserta') : 'Guest' }}
                                 </p>
                             </div>
                             
@@ -39,6 +39,19 @@
                             <hr class="dropdown-divider" />
                         </li>
                         @auth
+                            <!-- Menu Kelola Profil (Hanya untuk Admin) -->
+                            @if (Auth::user()->role == 'admin')
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.profile.edit', Auth::user()->id) }}">
+                                        <i class="icon-mid bi bi-person-gear me-2"></i> Kelola Profil
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                            @endif
+
+                            <!-- Menu Keluar -->
                             <li>
                                 <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="icon-mid bi bi-box-arrow-left me-2"></i> Keluar

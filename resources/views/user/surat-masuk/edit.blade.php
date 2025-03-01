@@ -10,33 +10,33 @@
 
         <!-- No Surat -->
         <div class="mb-3">
-            <label for="no_surat" class="form-label">No. Surat</label>
+            <label for="no_surat" class="form-label">Nomor Surat</label>
             <input type="text" class="form-control" id="no_surat" name="no_surat" value="{{ old('no_surat', $suratMasuk->no_surat) }}" required>
         </div>
 
         <!-- Tanggal -->
         <div class="mb-3">
-            <label for="tanggal" class="form-label">Tanggal</label>
+            <label for="tanggal" class="form-label">Tanggal Mengirim Surat</label>
             <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ old('tanggal', $suratMasuk->tanggal) }}" required>
         </div>
 
         <!-- Asal Pengirim -->
         <div class="mb-3">
-            <label for="asal_pengirim" class="form-label">Asal Pengirim</label>
+            <label for="asal_pengirim" class="form-label">Asal Pengirim Surat</label>
             <input type="text" class="form-control" id="asal_pengirim" name="asal_pengirim" value="{{ old('asal_pengirim', $suratMasuk->asal_pengirim) }}" required>
         </div>
 
         <!-- File PDF (Optional) -->
         <div class="mb-3">
-            <label for="file_pdf" class="form-label">Upload File PDF (Opsional)</label>
+            <label for="file_pdf" class="form-label">Unggah Surat Masuk (PDF)</label>
             <input type="file" class="form-control" id="file_pdf" name="file_pdf" accept="application/pdf">
             @if ($suratMasuk->file_pdf)
-                <p class="mt-2">File saat ini: <a href="{{ Storage::url('public/' . $suratMasuk->file_pdf) }}" target="_blank">Lihat PDF</a></p>
+                <p class="mt-2">File saat ini: <a href="{{ Storage::url('public/' . $suratMasuk->file_pdf) }}" target="_blank">Lihat Surat Masuk</a></p>
             @endif
         </div>
 
         <!-- Tombol Submit -->
-        <button type="submit" class="btn btn-primary">Update Surat Masuk</button>
+        <button type="submit" class="btn btn-primary">Perbarui Surat Masuk</button>
         <a href="{{ route('user.surat-masuk.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>

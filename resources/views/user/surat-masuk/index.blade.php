@@ -46,11 +46,11 @@
                     <table class="table table-bordered" id="table">
                         <thead class="table-light">
                             <tr>
-                                <th class="text-center">No</th>
-                                <th class="text-center">No. Surat</th>
-                                <th class="text-center">Tanggal</th>
+                                <th class="text-center">No.</th>
+                                <th class="text-center">Nomor Surat</th>
+                                <th class="text-center">Tanggal Mengirim Surat</th>
                                 <th class="text-center">Asal Pengirim Surat</th>
-                                <th class="text-center">File PDF</th>
+                                <th class="text-center">Surat Masuk</th>
                                 <th class="text-center">Surat Balasan</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
@@ -64,7 +64,7 @@
                                     <td>{{ $surat->asal_pengirim }}</td>
                                     <td class="text-center">
                                         @if($surat->file_pdf)
-                                            <a href="{{ Storage::url($surat->file_pdf) }}" target="_blank">Lihat PDF</a>
+                                            <a href="{{ Storage::url($surat->file_pdf) }}" target="_blank">Lihat Surat Masuk</a>
                                         @else
                                             Tidak ada file
                                         @endif

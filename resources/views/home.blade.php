@@ -8,7 +8,7 @@
       <div class="row gy-4">
         <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
           <h1>Sistem Informasi Manajemen Data PKL dan Magang</h1>
-          <p>Mudahnya kelola data peserta PKL dan Magang bersama Simasdalang</p>
+          <p>Mudahnya kelola data peserta PKL dan Magang bersama Simasdalang pada Dinas Komunikasi, Informatika dan Statistik Kabupaten Brebes.</p>
           <div class="d-flex">
             <a href="/register" class="btn-get-started">Register</a>
           </div>

@@ -5,7 +5,7 @@
     <div class="section">
         <div class="card">
             <div class="card-body">
-                <h3 class="mb-3">Edit Profile</h3>
+                <h3 class="mb-3">Edit Profil</h3>
                 <form action="{{ route('user.profile.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -72,7 +72,7 @@
 
                     <!-- Unggah Foto -->
                     <div class="mb-3">
-                        <label for="photo" class="form-label">Unggah Foto</label>
+                        <label for="photo" class="form-label">Unggah Foto Profil</label>
                         <input type="file" class="form-control" id="photo" name="photo" accept="image/*" onchange="previewImage(event)">
                         @if ($errors->has('photo'))
                             <div class="alert alert-danger">
@@ -82,14 +82,14 @@
 
                         @if ($user->photo)
                             <div class="mt-2">
-                                <p>Foto saat ini:</p>
+                                <p>Foto Profil Saat Ini:</p>
                                 <img src="{{ asset('storage/' . $user->photo) }}?{{ time() }}" alt="Foto Profil" class="img-thumbnail" width="150">
                             </div>
                         @endif
 
                         <!-- Tempat untuk menampilkan preview gambar -->
                         <div class="mt-3">
-                            <p>Preview Foto Baru:</p>
+                            <p>Preview Foto Profil Baru:</p>
                             <img id="preview" src="#" alt="Preview Gambar" class="img-thumbnail" style="display: none; width: 150px;">
                         </div>
                     </div>

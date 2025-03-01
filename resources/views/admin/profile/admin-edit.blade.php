@@ -1,10 +1,10 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h3>Edit User</h3>
+            <h3>Edit Data Peserta</h3>
         </div>
         <div class="card-body">
             <form action="{{ route('admin.profile.admin_update', $user->id) }}" method="POST" enctype="multipart/form-data">
@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="school" class="col-md-4 col-form-label text-md-end">Asal Sekolah</label>
+                    <label for="school" class="col-md-4 col-form-label text-md-end">Sekolah/Kuliah</label>
 
                     <div class="col-md-6">
                         <input id="school" type="text" class="form-control @error('school') is-invalid @enderror" name="school" value="{{ old('school', $user->school) }}">
@@ -110,7 +110,7 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="major" class="col-md-4 col-form-label text-md-end">Jurusan</label>
+                    <label for="major" class="col-md-4 col-form-label text-md-end">Jurusan/Prodi</label>
 
                     <div class="col-md-6">
                         <input id="major" type="text" class="form-control @error('major') is-invalid @enderror" name="major" value="{{ old('major', $user->major) }}">
@@ -152,13 +152,13 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="photo" class="col-md-4 col-form-label text-md-end">Foto</label>
+                    <label for="photo" class="col-md-4 col-form-label text-md-end">Foto Profil</label>
 
                     <div class="col-md-6">
                         <input id="photo" type="file" class="form-control @error('photo') is-invalid @enderror" name="photo">
 
                         @if($user->photo)
-                            <small>Foto saat ini: <a href="{{ asset('storage/' . $user->photo) }}" target="_blank">Lihat Foto</a></small>
+                            <small>Foto saat ini: <a href="{{ asset('storage/' . $user->photo) }}" target="_blank">Lihat Foto Profil</a></small>
                         @endif
 
                         @error('photo')
@@ -172,7 +172,7 @@
                 <div class="row mb-0">
                     <div class="col-md-8 offset-md-4">
                         <button type="submit" class="btn btn-primary">
-                            Update User
+                            Perbarui Data Peserta
                         </button>
                     </div>
                 </div>

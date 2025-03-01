@@ -1,5 +1,7 @@
 @component('mail::message')
-# Halo!
+@slot('header')
+    Simasdalang
+@endslot
 
 Anda menerima email ini karena kami menerima permintaan reset password untuk akun Anda.
 

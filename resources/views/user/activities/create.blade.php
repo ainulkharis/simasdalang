@@ -20,17 +20,17 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label for="date" class="form-label">Tanggal</label>
+                        <label for="date" class="form-label">Tanggal Kegiatan</label>
                         <input type="date" class="form-control" id="date" name="date" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="description" class="form-label">Deskripsi</label>
+                        <label for="description" class="form-label">Deskripsi Kegiatan</label>
                         <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="photo" class="form-label">Foto</label>
+                        <label for="photo" class="form-label">Foto Kegiatan</label>
                         <input type="file" class="form-control" id="photo" name="photo" accept="image/*" onchange="previewImage(event)">
                     </div>
 

@@ -1,13 +1,13 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Daftar Pengguna</h3>
+                <h3>Daftar Peserta</h3>
                 <p class="text-subtitle text-muted">
-                    Halaman Data Pengguna
+                    Halaman Data Peserta
                 </p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
@@ -17,7 +17,7 @@
                             <a href="/dashboard">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Pengguna
+                            Peserta
                         </li>
                     </ol>
                 </nav>
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <a href="{{ route('admin.profile.create') }}" class="btn btn-primary mb-3">Tambah Pengguna</a>
+    <a href="{{ route('admin.profile.create') }}" class="btn btn-primary mb-3">Tambah Peserta</a>
 
     @if (session('success'))
     <div id="success-alert" class="alert alert-success">
@@ -41,15 +41,16 @@
                         <thead class="table-light">
                             <tr>
                                 <th class="text-center">No.</th>
-                                <th class="text-center">Nama</th>
+                                <th class="text-center">Nama Lengkap</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Tempat/Tanggal Lahir</th>
                                 <th class="text-center">Alamat</th>
                                 <th class="text-center">Nomor Telepon</th>
-                                <th class="text-center">Asal Sekolah</th>
-                                <th class="text-center">Jurusan</th>
-                                <th class="text-center">Periode Magang</th>
-                                <th class="text-center">Foto</th>
+                                <th class="text-center">Sekolah/Kuliah</th>
+                                <th class="text-center">Jurusan/Prodi</th>
+                                <th class="text-center">Mulai Magang</th>
+                                <th class="text-center">Selesai Magang</th>
+                                <th class="text-center">Foto Profil</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -67,7 +68,10 @@
                                 <td>{{ $user->school }}</td>
                                 <td>{{ $user->major }}</td>
                                 <td class="text-center">
-                                    {{ $user->internship_start ? \Carbon\Carbon::parse($user->internship_start)->format('d-m-Y') . ' - ' . \Carbon\Carbon::parse($user->internship_end)->format('d-m-Y') : 'Belum Ditentukan' }}
+                                    {{ $user->internship_start ? \Carbon\Carbon::parse($user->internship_start)->format('d-m-Y') : 'Belum Ditentukan' }}
+                                </td>
+                                <td class="text-center">
+                                    {{ $user->internship_end ? \Carbon\Carbon::parse($user->internship_end)->format('d-m-Y') : 'Belum Ditentukan' }}
                                 </td>
                                 <td class="text-center">
                                     @if ($user->photo)
@@ -88,7 +92,7 @@
                                             Edit
                                         </a>
 
-                                        <form action="{{ route('admin.profile.destroy', $user) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?');">
+                                        <form action="{{ route('admin.profile.destroy', $user) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus peserta ini?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm mx-1">
@@ -117,7 +121,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Apakah Anda yakin ingin menghapus data pengguna ini?</p>
+                <p>Apakah Anda yakin ingin menghapus data peserta ini?</p>
             </div>
             <div class="modal-footer">
                 <form id="deleteForm" action="" method="POST" class="d-inline">

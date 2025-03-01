@@ -1,5 +1,7 @@
 @component('mail::message')
-# Halo!
+@slot('header')
+    Simasdalang
+@endslot
 
 Silakan klik tombol di bawah ini untuk memverifikasi alamat email Anda.
 

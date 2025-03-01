@@ -17,7 +17,7 @@
                                 <a href="{{ route('user.dashboard') }}">Dashboard</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Home
+                                Peserta
                             </li>
                         </ol>
                     </nav>

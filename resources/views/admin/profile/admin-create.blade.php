@@ -1,10 +1,10 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h3>Tambah User Baru</h3>
+            <h3>Tambah Peserta Baru</h3>
         </div>
         <div class="card-body">
             <form action="{{ route('admin.profile.store') }}" method="POST" enctype="multipart/form-data">
@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="school" class="col-md-4 col-form-label text-md-end">Asal Sekolah</label>
+                    <label for="school" class="col-md-4 col-form-label text-md-end">Sekolah/Kuliah</label>
 
                     <div class="col-md-6">
                         <input id="school" type="text" class="form-control @error('school') is-invalid @enderror" name="school" value="{{ old('school') }}">
@@ -122,7 +122,7 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="major" class="col-md-4 col-form-label text-md-end">Jurusan</label>
+                    <label for="major" class="col-md-4 col-form-label text-md-end">Jurusan/Prodi</label>
 
                     <div class="col-md-6">
                         <input id="major" type="text" class="form-control @error('major') is-invalid @enderror" name="major" value="{{ old('major') }}">
@@ -164,7 +164,7 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="photo" class="col-md-4 col-form-label text-md-end">Foto</label>
+                    <label for="photo" class="col-md-4 col-form-label text-md-end">Foto Profil</label>
 
                     <div class="col-md-6">
                         <input id="photo" type="file" class="form-control @error('photo') is-invalid @enderror" name="photo">
@@ -180,7 +180,7 @@
                 <div class="row mb-0">
                     <div class="col-md-8 offset-md-4">
                         <button type="submit" class="btn btn-primary">
-                            Tambah User
+                            Tambah Peserta Baru
                         </button>
                     </div>
                 </div>

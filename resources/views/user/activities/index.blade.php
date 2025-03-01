@@ -41,9 +41,9 @@
                         <thead class="table-light">
                             <tr>
                                 <th class="text-center">No.</th>
-                                <th class="text-center">Tanggal</th>
-                                <th class="text-center">Deskripsi</th>
-                                <th class="text-center">Foto</th>
+                                <th class="text-center">Tanggal Kegiatan</th>
+                                <th class="text-center">Deskripsi Kegiatan</th>
+                                <th class="text-center">Foto Kegiatan</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -86,7 +86,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="imageModalLabel">Preview Foto</h5>
+                <h5 class="modal-title" id="imageModalLabel">Preview Foto Kegiatan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">

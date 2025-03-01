@@ -8,6 +8,7 @@ use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -113,5 +114,70 @@ class AdminController extends Controller
         $user->delete();
 
         return redirect()->route('admin.profile.admin-user')->with('success', 'User berhasil dihapus.');
+    }
+
+    public function editActivity(Activity $activity)
+    {
+        return view('admin.activities.edit', compact('activity'));
+    }
+
+    public function updateActivity(Request $request, Activity $activity)
+    {
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'description' => 'required|string|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+        ]);
+
+        if ($request->hasFile('photo')) {
+            if ($activity->photo && Storage::disk('public')->exists($activity->photo)) {
+                Storage::disk('public')->delete($activity->photo);
+            }
+            $validated['photo'] = $request->file('photo')->store('activity-photos', 'public');
+        }
+
+        $activity->update($validated);
+
+        return redirect()->route('admin.profile.show', $activity->user_id)->with('success', 'Kegiatan berhasil diperbarui.');
+    }
+
+    public function editProfile(User $user)
+    {
+        // Pastikan hanya admin yang bisa mengedit profilnya sendiri
+        if ($user->id !== Auth::user()->id) {
+            return redirect()->route('admin.dashboard')->with('error', 'Anda tidak memiliki akses untuk mengedit profil ini.');
+        }
+
+        return view('admin.profile.edit-profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request, User $user)
+    {
+        // Pastikan hanya admin yang bisa memperbarui profilnya sendiri
+        if ($user->id !== Auth::user()->id) {
+            return redirect()->route('admin.dashboard')->with('error', 'Anda tidak memiliki akses untuk memperbarui profil ini.');
+        }
+
+        // Validasi input
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+        ]);
+
+        // Proses upload foto
+        if ($request->hasFile('photo')) {
+            // Hapus foto lama jika ada
+            if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+                Storage::disk('public')->delete($user->photo);
+            }
+            // Simpan foto baru
+            $validated['photo'] = $request->file('photo')->store('photos', 'public');
+        }
+
+        // Update data profil
+        $user->update($validated);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Profil berhasil diperbarui.');
     }
 }

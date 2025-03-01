@@ -6,8 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
+use App\Notifications\ResetKataSandi;
+use App\Notifications\VerifikasiEmail;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -73,23 +76,18 @@ class User extends Authenticatable implements MustVerifyEmail
         ]);
 
         // Kirim notifikasi reset password ke email user
-        $this->notify(new class($token, $resetUrl) extends ResetPasswordNotification {
-            protected $resetUrl;
+        $this->notify(new ResetKataSandi($resetUrl));
+    }
 
-            public function __construct($token, $resetUrl)
-            {
-                parent::__construct($token);
-                $this->resetUrl = $resetUrl;
-            }
+    public function sendEmailVerificationNotification()
+    {
+        $verificationUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            ['id' => $this->getKey(), 'hash' => sha1($this->getEmailForVerification())]
+        );
 
-            public function toMail($notifiable)
-            {
-                return (new MailMessage)
-                    ->subject('Reset Password Notification')
-                    ->line('Anda menerima email ini karena kami menerima permintaan reset password untuk akun Anda.')
-                    ->action('Reset Password', $this->resetUrl)
-                    ->line('Jika Anda tidak meminta reset password, abaikan email ini.');
-            }
-        });
+        // Kirim notifikasi dengan URL verifikasi yang benar
+        $this->notify(new VerifikasiEmail($verificationUrl));
     }
 }

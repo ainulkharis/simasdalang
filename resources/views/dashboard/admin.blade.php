@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
     <div class="page-heading">
@@ -33,12 +33,12 @@
                     <div class="col-12 col-md-4">
                         <div class="card h-100">
                             <div class="card-header">
-                                <h4>Jumlah Pengguna Terdaftar</h4>
+                                <h4>Jumlah Peserta Terdaftar</h4>
                             </div>
                             <div class="card-body">
                                 <h1>{{ $jumlahUser }}</h1>
-                                <p>Total pengguna yang terdaftar pada sistem</p>
-                                <a href="{{ route('admin.profile.admin-user') }}" class="btn btn-primary">Lihat Pengguna</a>
+                                <p>Total peserta yang terdaftar pada sistem</p>
+                                <a href="{{ route('admin.profile.admin-user') }}" class="btn btn-primary">Lihat Peserta</a>
                             </div>
                         </div>
                     </div>

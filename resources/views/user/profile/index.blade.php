@@ -5,9 +5,9 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Profile</h3>
+                <h3>Data Profil</h3>
                 <p class="text-subtitle text-muted">
-                    Halaman Profile
+                    Halaman Profil
                 </p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
@@ -17,7 +17,7 @@
                             <a href="/dashboard">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Profile
+                            Profil
                         </li>
                     </ol>
                 </nav>
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="mt-4 text-center">
-                <a href="{{ route('user.profile.edit') }}" class="btn btn-primary float-end">Edit Profile</a>
+                <a href="{{ route('user.profile.edit') }}" class="btn btn-primary float-end">Edit Profil</a>
             </div>
         </div>
     </div>

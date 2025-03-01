@@ -1,7 +1,7 @@
 <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container container-xl position-relative d-flex align-items-center">
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <h1 class="sitename">Simasdalang</h1>
+      <a href="/" class="logo d-flex align-items-center me-auto">
+        <h1 class="sitename">SIMASDALANG</h1>
       </a>
       <nav id="navmenu" class="navmenu">
         <ul>

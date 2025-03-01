@@ -118,6 +118,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('profile/{user}', [AdminController::class, 'admin_update'])->name('profile.admin_update');
         Route::delete('profile/{user}', [AdminController::class, 'destroy'])->name('profile.destroy');
 
+        // Rute untuk edit dan update profil admin
+        Route::get('profile/{user}/edit', [AdminController::class, 'editProfile'])->name('profile.edit');
+        Route::put('profile/{user}', [AdminController::class, 'updateProfile'])->name('profile.update');
+
+        // Menu untuk mengelola kegiatan peserta
+        Route::get('activities/{activity}/edit', [AdminController::class, 'editActivity'])->name('activities.edit');
+        Route::put('activities/{activity}', [AdminController::class, 'updateActivity'])->name('activities.update');
+
         // Menu Surat Masuk Admin
         Route::get('surat-masuk', [AdminSuratMasukController::class, 'index'])->name('surat-masuk.index');
         Route::get('surat-masuk/{surat_masuk}/edit', [AdminSuratMasukController::class, 'edit'])->name('surat-masuk.edit');
