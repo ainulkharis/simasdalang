@@ -18294,3 +18294,9 @@ a {
 }
 
 .card-body .row .col-md-6 p span {word-break: break-word;}
+
+input[readonly] {
+    background-color: #e9ecef; /* Warna abu-abu seperti disabled */
+    opacity: 1; /* Pastikan opacity tidak berubah */
+    cursor: not-allowed; /* Ubah cursor menjadi not-allowed */
+}

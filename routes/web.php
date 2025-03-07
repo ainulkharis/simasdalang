@@ -114,8 +114,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('profile/create', [AdminController::class, 'create'])->name('profile.create');
         Route::post('profile', [AdminController::class, 'store'])->name('profile.store');
         Route::get('profile/{user}', [AdminController::class, 'show'])->name('profile.show');
-        Route::get('profile/{user}/edit', [AdminController::class, 'edit'])->name('profile.edit');
-        Route::put('profile/{user}', [AdminController::class, 'admin_update'])->name('profile.admin_update');
+        // Route::get('profile/{user}/edit', [AdminController::class, 'edit'])->name('profile.edit');
+        // Route::put('profile/{user}', [AdminController::class, 'admin_update'])->name('profile.admin_update');
         Route::delete('profile/{user}', [AdminController::class, 'destroy'])->name('profile.destroy');
 
         // Rute untuk edit dan update profil admin
