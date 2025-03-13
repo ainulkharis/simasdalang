@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
+use App\Services\EmailValidationService;
 
 class AuthController extends Controller
 {
@@ -77,6 +78,17 @@ class AuthController extends Controller
             'password.confirmed' => 'Konfirmasi password tidak cocok.'
         ]);
 
+        // Validasi email menggunakan Abstract API
+        $emailValidationService = new EmailValidationService();
+        $validationResult = $emailValidationService->validateEmail($request->email);
+
+        // Cek hasil validasi
+        if ($validationResult['deliverability'] !== 'DELIVERABLE' || $validationResult['is_valid_format']['value'] !== true) {
+            return back()->withErrors([
+                'email' => 'Email tidak valid atau tidak terdaftar.',
+            ])->onlyInput('email');
+        }
+
         // Membuat user baru
         $user = User::create([
             'name' => $request->name,
@@ -91,7 +103,7 @@ class AuthController extends Controller
         // Otomatis login setelah registrasi
         Auth::login($user);
 
-        return redirect()->route('verification.notice')->with('message', 'Silakan periksa email Anda untuk verifikasi.');
+        return redirect()->route('verification.notice')->with('message', 'Silahkan periksa email Anda untuk verifikasi.');
     }
 
     // Method untuk menampilkan form lupa password
@@ -118,7 +130,8 @@ class AuthController extends Controller
         // Kirim email reset password
         $user->sendPasswordResetNotification($token);
 
-        return back()->with('status', 'Link reset password telah dikirim ke alamat email Anda. Silakan periksa atau buka kotak masuk atau folder spam pada email Anda.');
+        session()->flash('status', 'Link reset password telah dikirim ke alamat email Anda. Silakan periksa <strong>kotak masuk</strong> atau <strong>folder spam</strong> pada email Anda.');
+        return back();
     }
 
     // Method untuk menampilkan form reset password

@@ -5,7 +5,7 @@
     <div class="section">
         <div class="card">
             <div class="card-body">
-                <h3 class="mb-3">Edit Profil</h3>
+                <h3 class="mb-3">Edit Data Profil</h3>
                 <form action="{{ route('user.profile.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -80,22 +80,15 @@
                             </div>
                         @endif
 
-                        @if ($user->photo)
-                            <div class="mt-2">
-                                <p>Foto Profil Saat Ini:</p>
-                                <img src="{{ asset('storage/' . $user->photo) }}?{{ time() }}" alt="Foto Profil" class="img-thumbnail" width="150">
-                            </div>
-                        @endif
-
-                        <!-- Tempat untuk menampilkan preview gambar -->
+                        <!-- Preview Foto Profil -->
                         <div class="mt-3">
-                            <p>Preview Foto Profil Baru:</p>
-                            <img id="preview" src="#" alt="Preview Gambar" class="img-thumbnail" style="display: none; width: 150px;">
+                            <p>Preview Foto Profil:</p>
+                            <img id="preview" src="{{ $user->photo ? asset('storage/' . $user->photo) : '#' }}" alt="Preview Foto Profil" class="img-thumbnail" style="width: 150px; {{ $user->photo ? '' : 'display: none;' }}">
                         </div>
                     </div>
 
                     <!-- Tombol Submit -->
-                    <button type="submit" class="btn btn-primary float-end">Simpan</button>
+                    <button type="submit" class="btn btn-primary float-end">Simpan Perubahan</button>
                 </form>
             </div>
         </div>
@@ -120,8 +113,9 @@
             // Membaca file gambar
             reader.readAsDataURL(input.files[0]);
         } else {
-            preview.src = '#';
-            preview.style.display = 'none'; // Sembunyikan elemen preview jika tidak ada file
+            // Jika tidak ada file yang dipilih, tampilkan foto lama (jika ada)
+            preview.src = "{{ $user->photo ? asset('storage/' . $user->photo) : '#' }}";
+            preview.style.display = "{{ $user->photo ? 'block' : 'none' }}";
         }
     }
 </script>

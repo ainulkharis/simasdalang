@@ -43,8 +43,11 @@ class SuratMasukController extends Controller
 
         // Menyimpan file PDF jika ada
         if ($request->hasFile('file_pdf')) {
-            $validatedData['file_pdf'] = $request->file('file_pdf')->store('pdfs', 'public'); // Menyimpan file ke folder 'public/pdfs'
+            $validatedData['file_pdf'] = $request->file('file_pdf')->store('pdfs', 'public');
         }
+
+        // Tambahkan user_id berdasarkan pengguna yang sedang login
+        $validatedData['user_id'] = \Illuminate\Support\Facades\Auth::user()->id;
 
         // Membuat entri baru di database
         SuratMasuk::create($validatedData);

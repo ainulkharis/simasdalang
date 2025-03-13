@@ -5,8 +5,8 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Surat Masuk</h3>
-                <p class="text-subtitle text-muted">Halaman Semua Surat Masuk</p>
+                <h3>Data Berita Kegiatan</h3>
+                <p class="text-subtitle text-muted">Halaman Semua Berita Kegiatan</p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -15,13 +15,15 @@
                             <a href="{{ route('admin.dashboard') }}">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Surat Masuk
+                            Berita
                         </li>
                     </ol>
                 </nav>
             </div>
         </div>
     </div>
+
+    <a href="{{ route('admin.berita.create') }}" class="btn btn-primary mb-3">Tambah Berita Baru</a>
 
     <!-- Notifikasi -->
     @if(session('success'))
@@ -34,58 +36,53 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive" style="max-width: 100%; overflow-x: auto;">
-                    <table class="table table-bordered" id="table-surat-masuk">
+                    <table class="table table-bordered" id="table-berita">
                         <thead class="table-light">
                             <tr>
                                 <th class="text-center">No.</th>
-                                <th class="text-center">Nomor Surat</th>
-                                <th class="text-center">Tanggal Mengirim Surat</th>
-                                <th class="text-center">Asal Pengirim Surat</th>
-                                <th class="text-center">Pengirim</th>
-                                <th class="text-center">Surat Masuk</th>
-                                <th class="text-center">Surat Balasan</th>
+                                <th class="text-center">Judul Berita</th>
+                                <th class="text-center">Deskripsi</th>
+                                <th class="text-center">Gambar</th>
+                                <th class="text-center">Tanggal Dibuat</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($suratMasuk as $surat)
+                            @foreach($berita as $item)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td class="text-center">{{ $surat->no_surat }}</td>
-                                    <td class="text-center">{{ \Carbon\Carbon::parse($surat->tanggal)->format('d-m-Y') }}</td>
-                                    <td>{{ $surat->asal_pengirim }}</td>
-                                    <td>{{ $surat->user->name }}</td>
+                                    <td>{{ $item->judul }}</td>
+                                    <td>{{ Str::limit($item->deskripsi, 50) }}</td>
                                     <td class="text-center">
-                                        @if($surat->file_pdf)
-                                            <a href="{{ Storage::url($surat->file_pdf) }}" target="_blank">Lihat Surat Masuk</a>
+                                        @if($item->gambar)
+                                            <img src="{{ asset('storage/' . $item->gambar) }}" 
+                                                 alt="Gambar Berita" 
+                                                 width="100" 
+                                                 style="max-width: 100px; max-height: 100px; object-fit: cover; cursor: pointer;" 
+                                                 data-bs-toggle="modal" 
+                                                 data-bs-target="#imageModal" 
+                                                 onclick="showImage('{{ asset('storage/' . $item->gambar) }}')">
                                         @else
-                                            Tidak ada file
+                                            <span>Tidak ada gambar</span>
                                         @endif
                                     </td>
-                                    <td class="text-center">
-                                        @if($surat->balasan_pdf)
-                                            <a href="{{ Storage::url($surat->balasan_pdf) }}" target="_blank">Lihat Balasan</a>
-                                        @else
-                                            Belum ada balasan
-                                        @endif
-                                    </td>
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center align-items-center gap-2">
                                             <!-- Tombol Edit -->
-                                            <a href="{{ route('admin.surat-masuk.edit', $surat->id) }}" 
-                                            class="btn btn-warning btn-sm d-flex align-items-center" 
-                                            style="line-height: 1; padding: 6px 10px;">
+                                            <a href="{{ route('admin.berita.edit', $item->slug) }}" 
+                                               class="btn btn-warning btn-sm d-flex align-items-center" 
+                                               style="line-height: 1; padding: 6px 10px;">
                                                 <i class="bi bi-pencil-square fs-6"></i>
                                                 <span class="ms-1">Edit</span>
                                             </a>
-
                                             <!-- Tombol Hapus -->
-                                            <form action="{{ route('admin.surat-masuk.destroy', $surat->id) }}" 
-                                                method="POST" 
-                                                style="display:inline;">
+                                            <form action="{{ route('admin.berita.destroy', $item->slug) }}" 
+                                                  method="POST" 
+                                                  style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="btn btn-danger btn-sm d-flex align-items-center" onclick="confirmDelete('{{ route('admin.surat-masuk.destroy', $surat->id) }}')" style="line-height: 1; padding: 6px 10px;">
+                                                <button type="button" class="btn btn-danger btn-sm d-flex align-items-center" onclick="confirmDelete('{{ route('admin.berita.destroy', $item->slug) }}')" style="line-height: 1; padding: 6px 10px;">
                                                     <i class="bi bi-trash fs-6"></i>
                                                     <span class="ms-1">Hapus</span>
                                                 </button>
@@ -102,28 +99,41 @@
     </section>
 </div>
 
+<!-- Modal untuk preview gambar -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Preview Gambar Berita</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="previewImage" src="" alt="Preview Gambar" style="width: 100%; max-height: 500px; object-fit: contain;">
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    // Fungsi untuk menampilkan gambar di modal
+    function showImage(src) {
+        document.getElementById("previewImage").src = src;
+    }
+
     // Script untuk menghilangkan notifikasi setelah 3 detik
     window.onload = function() {
         const successAlert = document.getElementById("success-alert");
-        const balasanAlert = document.getElementById("balasan-alert");
 
         if (successAlert) {
             setTimeout(function() {
                 successAlert.style.display = 'none';
-            }, 3000); // Hilang setelah 3 detik
-        }
-
-        if (balasanAlert) {
-            setTimeout(function() {
-                balasanAlert.style.display = 'none';
-            }, 3000); // Hilang setelah 3 detik
+            }, 3000);
         }
     };
 
     // Script untuk Simple DataTables
     document.addEventListener("DOMContentLoaded", function() {
-        const dataTable = new simpleDatatables.DataTable("#table-surat-masuk", {
+        const dataTable = new simpleDatatables.DataTable("#table-berita", {
             searchable: true, // Aktifkan fitur pencarian
             perPage: 10, // Jumlah baris per halaman
             perPageSelect: [5, 10, 15, 20], // Opsi jumlah baris per halaman
@@ -178,4 +188,17 @@
         });
     }
 </script>
+
+<style>
+    /* Pindahkan kolom pencarian ke kanan */
+    .datatable-search {
+        float: right; /* Pindahkan ke kanan */
+        margin-bottom: 10px; /* Beri jarak dari tabel */
+    }
+
+    /* Optional: Atur lebar input pencarian */
+    .datatable-search input {
+        width: 200px; /* Sesuaikan lebar input */
+    }
+</style>
 @endsection

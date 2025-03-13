@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Tambah Surat Masuk</h1>
+    <h3 class="mb-3">Tambah Surat Masuk</h3>
 
     <form action="{{ route('user.surat-masuk.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -19,11 +19,11 @@
             <input type="text" class="form-control" id="asal_pengirim" name="asal_pengirim" required>
         </div>
         <div class="mb-3">
-            <label for="file_pdf" class="form-label">Unggah Surat Masuk (PDF)</label>
+            <label for="file_pdf" class="form-label">Unggah Surat Masuk (Format PDF)</label>
             <input type="file" class="form-control" id="file_pdf" name="file_pdf" accept="application/pdf">
         </div>
-        <button type="submit" class="btn btn-primary">Simpan</button>
-        <a href="{{ route('user.surat-masuk.index') }}" class="btn btn-secondary">Kembali</a>
+        <button type="submit" class="btn btn-primary float-end">Simpan</button>
+        {{-- <a href="{{ route('user.surat-masuk.index') }}" class="btn btn-secondary">Kembali</a> --}}
     </form>
 </div>
 @endsection

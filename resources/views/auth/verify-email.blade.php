@@ -52,7 +52,7 @@
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="verification-container">
         <h1>Verifikasi Email Anda</h1>
-        <p>Terima kasih telah mendaftar. Sebelum melanjutkan, silakan periksa email Anda pada kotak masuk atau folder spam untuk melihat tautan verifikasi.</p>
+        <p>Terima kasih telah mendaftar. Sebelum melanjutkan, silahkan periksa email Anda pada <strong>kotak masuk</strong> atau <strong>folder spam</strong> untuk melihat tautan verifikasi.</p>
 
         @if (session('message'))
             <div class="alert alert-success">

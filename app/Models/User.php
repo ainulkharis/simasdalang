@@ -16,7 +16,6 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
-
     /**
      * The attributes that are mass assignable.
      *
@@ -89,5 +88,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
         // Kirim notifikasi dengan URL verifikasi yang benar
         $this->notify(new VerifikasiEmail($verificationUrl));
+    }
+
+    // Relasi ke model SuratMasuk
+    public function suratMasuks()
+    {
+        return $this->hasMany(SuratMasuk::class);
     }
 }

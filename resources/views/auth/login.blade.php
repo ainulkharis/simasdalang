@@ -38,7 +38,7 @@
                     </form>
                     <p>Lupa password? <a href="{{ route('password.request') }}">Reset di sini</a></p>
                     <p>Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
-                    <p>Kembali ke <a href="/">Home</a></p>
+                    <p>Kembali ke <a href="/">Beranda</a></p>
                 </div>
             </div>
             <div class="col-md-6 info-container">

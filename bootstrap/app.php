@@ -11,6 +11,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Middleware global untuk grup 'web'
+        // $middleware->web([
+        //     \Illuminate\Session\Middleware\StartSession::class,
+        //     \App\Http\Middleware\EncryptCookies::class,
+        //     \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        //     \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        //     \App\Http\Middleware\VerifyCsrfToken::class,
+        //     \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        // ]);
+
         // Daftarkan middleware custom
         $middleware->alias([
             'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,

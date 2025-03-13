@@ -18,19 +18,19 @@
                     <!-- Notifikasi Sukses -->
                     @if (session('status'))
                         <div class="alert alert-success">
-                            {{ session('status') }}
+                            {!! session('status') !!}
                         </div>
                     @endif
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
-                        <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
+                        <input type="email" name="email" placeholder="Email terdaftar" value="{{ old('email') }}" required>
                         @error('email')
                             <div class="error-message">{{ $message }}</div>
                         @enderror
-                        <input type="submit" value="Kirim Link Reset Password">
+                        <input type="submit" value="Kirim">
                     </form>
                     <p>Ingat password? <a href="{{ route('login') }}">Login di sini</a></p>
-                    <p>Kembali ke <a href="/">Home</a></p>
+                    <p>Kembali ke <a href="/">Beranda</a></p>
                 </div>
             </div>
             <div class="col-md-6 info-container">

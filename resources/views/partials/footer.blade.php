@@ -1,7 +1,7 @@
-<footer>
-    <div class="footer clearfix text-muted">
-        <div class="float-start">
-            <p>{{ date('Y') }} &copy; Simasdalang - Dinkominfotik Kab. Brebes</p>
+<footer id="footer" class="footer">
+    <div class="container">
+        <div class="copyright flex-c text-center">
+            <p>{{ date('Y') }} &copy;<strong class="px-1 sitename">Simasdalang -</strong>Dinkominfotik Kab. Brebes</p>
         </div>
     </div>
 </footer>

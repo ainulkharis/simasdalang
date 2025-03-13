@@ -6,12 +6,13 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminSuratMasukController;
+use App\Http\Controllers\AdminBeritaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
-// Route untuk semua pengguna (tidak perlu login)
+// ROUTE UNTUK SEMUA PENGGUNA (tidak perlu login)
 Route::get('/', function () {
     return view('home', [
         'title' => 'Home',
@@ -23,6 +24,18 @@ Route::get('/', function () {
 //         'title' => 'Kegiatan'
 //     ]);
 // });
+
+Route::get('/berita', function () {
+    $berita = \App\Models\Berita::latest()->paginate(6);
+
+    return view('news', ['title' => 'Berita', 'berita' => $berita]);
+})->name('berita');
+
+Route::get('/berita/{slug}', function ($slug) {
+    $berita = \App\Models\Berita::where('slug', $slug)->firstOrFail();
+
+    return view('news-detail', ['title' => 'Detail Berita', 'berita' => $berita]);
+})->name('berita.detail');
 
 Route::get('/tentang', function () {
     return view('about', [
@@ -36,7 +49,7 @@ Route::get('/kontak', function () {
     ]);
 });
 
-// Route untuk login dan register
+// ROUTE UNTUK LOGIN DAN REGISTER
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
@@ -54,7 +67,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
         return redirect()->route('login')->with('message', 'Silakan login terlebih dahulu.');
     }
     
-    $request->fulfill(); // Tandai email sebagai terverifikasi
+    $request->fulfill();
 
     // Mengarahkan ke dashboard berdasarkan role
     if ($request->user()->role == 'admin') {
@@ -84,9 +97,10 @@ Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->
 Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
-// Route yang memerlukan autentikasi
+// ROUTE YANG MEMERLUKAN AUTENTIKASI
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Dashboard untuk User
+
+    // DASHBOARD UNTUK USER (PESERTA)
     Route::prefix('user')->name('user.')->middleware('user')->group(function () {
         Route::get('dashboard', function () {
             return view('dashboard.index');
@@ -104,8 +118,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('surat-masuk', SuratMasukController::class);
     });
 
-    // Dashboard untuk Admin
-    Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
+    // DASHBOARD UNTUK ADMIN (PEMBIMBING)
+    Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin'])->group(function () {
         // Dashboard Admin
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
@@ -114,14 +128,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('profile/create', [AdminController::class, 'create'])->name('profile.create');
         Route::post('profile', [AdminController::class, 'store'])->name('profile.store');
         Route::get('profile/{user}', [AdminController::class, 'show'])->name('profile.show');
-        // Route::get('profile/{user}/edit', [AdminController::class, 'edit'])->name('profile.edit');
-        // Route::put('profile/{user}', [AdminController::class, 'admin_update'])->name('profile.admin_update');
         Route::delete('profile/{user}', [AdminController::class, 'destroy'])->name('profile.destroy');
 
         // Rute untuk edit dan update profil admin
-        Route::get('profile/{user}/edit', [AdminController::class, 'editProfile'])->name('profile.edit');
-        Route::put('profile/{user}', [AdminController::class, 'updateProfile'])->name('profile.update');
-
+        // Route::get('profile/{user}/edit', [AdminController::class, 'editProfile'])->name('profile.edit');
+        // Route::put('profile/{user}', [AdminController::class, 'updateProfile'])->name('profile.update');
+        
+        Route::get('profile/{user}/edit', [AdminController::class, 'edit'])->name('profile.edit');
+        Route::put('profile/{user}', [AdminController::class, 'update'])->name('profile.update');
+        
         // Menu untuk mengelola kegiatan peserta
         Route::get('activities/{activity}/edit', [AdminController::class, 'editActivity'])->name('activities.edit');
         Route::put('activities/{activity}', [AdminController::class, 'updateActivity'])->name('activities.update');
@@ -133,7 +148,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::post('surat-masuk/{id}/balas', [AdminSuratMasukController::class, 'balasSurat'])->name('surat-masuk.balas');
 
-        // Route::resource('surat-masuk', AdminSuratMasukController::class)->except(['show', 'destroy']);
-        // Penjelasan: except(['show', 'destroy']) berarti hanya membuat route yang umum digunakan, kecuali show dan destroy.
+        // Menu Kelola Berita
+        Route::resource('berita', AdminBeritaController::class)->parameters([
+            'berita' => 'berita:slug'
+        ]);
     });
 });

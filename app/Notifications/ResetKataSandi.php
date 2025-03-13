@@ -24,11 +24,11 @@ class ResetKataSandi extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Atur Ulang Kata Sandi')
+            ->subject('Atur Ulang Password')
             ->greeting('Halo!')
-            ->line('Anda menerima email ini karena kami menerima permintaan pengaturan ulang kata sandi untuk akun Anda.')
-            ->action('Atur Ulang Kata Sandi', $this->resetUrl)
-            ->line('Jika Anda tidak meminta pengaturan ulang kata sandi, abaikan email ini.')
+            ->line('Anda menerima email ini karena kami menerima permintaan pengaturan ulang password akun Anda.')
+            ->action('Atur Ulang Password', $this->resetUrl)
+            ->line('Jika Anda tidak meminta pengaturan ulang password, abaikan email ini.')
             ->salutation('Salam, Tim Simasdalang');
     }
 }

@@ -15,7 +15,7 @@
     <div class="section">
         <div class="card">
             <div class="card-body">
-                <h3 class="mb-3">Tambah Kegiatan</h3>
+                <h3 class="mb-3">Tambah Data Kegiatan</h3>
                 <form action="{{ route('user.activities.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 

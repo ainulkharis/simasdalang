@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Edit Surat Masuk</h1>
+    <h3 class="mb-3">Edit Surat Masuk</h3>
     
     <form action="{{ route('user.surat-masuk.update', $suratMasuk->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -28,7 +28,7 @@
 
         <!-- File PDF (Optional) -->
         <div class="mb-3">
-            <label for="file_pdf" class="form-label">Unggah Surat Masuk (PDF)</label>
+            <label for="file_pdf" class="form-label">Unggah Surat Masuk (Format PDF)</label>
             <input type="file" class="form-control" id="file_pdf" name="file_pdf" accept="application/pdf">
             @if ($suratMasuk->file_pdf)
                 <p class="mt-2">File saat ini: <a href="{{ Storage::url('public/' . $suratMasuk->file_pdf) }}" target="_blank">Lihat Surat Masuk</a></p>
@@ -36,8 +36,8 @@
         </div>
 
         <!-- Tombol Submit -->
-        <button type="submit" class="btn btn-primary">Perbarui Surat Masuk</button>
-        <a href="{{ route('user.surat-masuk.index') }}" class="btn btn-secondary">Kembali</a>
+        <button type="submit" class="btn btn-primary float-end">Simpan Perubahan</button>
+        {{-- <a href="{{ route('user.surat-masuk.index') }}" class="btn btn-secondary">Kembali</a> --}}
     </form>
 </div>
 @endsection

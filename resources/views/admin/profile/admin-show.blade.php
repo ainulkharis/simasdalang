@@ -48,10 +48,6 @@
                     <p><strong>Selesai Magang:</strong> <span class="text-muted">{{ $user->internship_end ? \Carbon\Carbon::parse($user->internship_end)->format('d-m-Y') : '-' }}</span></p>
                 </div>
             </div>
-
-            <div class="mt-4 text-center">
-                <a href="{{ route('admin.profile.edit', $user->id) }}" class="btn btn-primary float-end">Edit Data Peserta</a>
-            </div>
         </div>
     </div>
 
@@ -61,59 +57,35 @@
             <h4 class="card-title">Kegiatan Peserta</h4>
         </div>
         <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="table-kegiatan">
                 <thead class="table-light">
                     <tr>
                         <th class="text-center">No</th>
                         <th class="text-center">Tanggal Kegiatan</th>
-                        <th class="text-center">Deskripsi Kegiatan</th>
+                        <th>Deskripsi Kegiatan</th>
                         <th class="text-center">Foto Kegiatan</th>
-                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($activities as $activity)
                         <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ \Carbon\Carbon::parse($activity->date)->format('d-m-Y') }}</td>
-                            <td>{{ $activity->description }}</td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">{{ $loop->iteration }}</td>
+                            <td class="text-center align-middle">{{ \Carbon\Carbon::parse($activity->date)->format('d-m-Y') }}</td>
+                            <td class="align-middle">{{ $activity->description }}</td>
+                            <td class="text-center align-middle">
                                 @if ($activity->photo)
-                                    <img src="{{ asset('storage/' . $activity->photo) }}" alt="Foto Kegiatan" style="width: 100px; height: auto;">
+                                    <img src="{{ asset('storage/' . $activity->photo) }}" 
+                                         alt="Foto Kegiatan" 
+                                         style="width: 100px; height: auto; cursor: pointer; display: block; margin: 0 auto;" 
+                                         onclick="showPreview('{{ asset('storage/' . $activity->photo) }}')">
                                 @else
                                     Tidak ada foto
                                 @endif
                             </td>
-                            <td class="text-center">
-                                <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <!-- Tombol Edit -->
-                                    <a href="{{ route('admin.activities.edit', $activity->id) }}" 
-                                    class="btn btn-sm btn-primary d-flex align-items-center" 
-                                    style="line-height: 1; padding: 6px 10px;">
-                                        <i class="bi bi-pencil-square fs-6"></i>
-                                        <span class="ms-1">Edit</span>
-                                    </a>
-
-                                    <!-- Tombol Hapus -->
-                                    <form action="{{ route('user.activities.destroy', $activity->id) }}" 
-                                        method="POST" 
-                                        class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" 
-                                                class="btn btn-sm btn-danger d-flex align-items-center" 
-                                                onclick="return confirm('Hapus kegiatan ini?')" 
-                                                style="line-height: 1; padding: 6px 10px;">
-                                            <i class="bi bi-trash fs-6"></i>
-                                            <span class="ms-1">Hapus</span>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">Belum ada kegiatan</td>
+                            <td colspan="4" class="text-center">Belum ada kegiatan</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -121,4 +93,129 @@
         </div>
     </div>
 </div>
+
+<!-- Modal untuk preview foto kegiatan -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel">Preview Foto Kegiatan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="previewImage" src="" alt="Preview Foto" style="max-width: 100%; max-height: 500px; object-fit: contain;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Fungsi untuk menampilkan preview foto
+    function showPreview(imageUrl) {
+        // Set sumber gambar di modal
+        document.getElementById('previewImage').src = imageUrl;
+
+        // Buka modal
+        const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
+        previewModal.show();
+    }
+
+    // Script untuk Simple DataTables
+    document.addEventListener("DOMContentLoaded", function() {
+        const dataTable = new simpleDatatables.DataTable("#table-kegiatan", {
+            searchable: true, // Aktifkan fitur pencarian
+            perPage: 10, // Jumlah baris per halaman
+            perPageSelect: [5, 10, 15, 20], // Opsi jumlah baris per halaman
+            labels: {
+                placeholder: "Cari data...", // Placeholder untuk input pencarian
+                searchTitle: "Cari di tabel", // Judul untuk fitur pencarian
+                perPage: "Baris per halaman", // Label untuk dropdown perPage
+                noRows: "Tidak ada data yang ditemukan", // Pesan jika tidak ada data
+                info: "Data {start} - {end} dari total {rows} data keseluruhan.", // Pesan info
+                noResults: "Tidak ada hasil yang cocok", // Pesan jika tidak ada hasil pencarian
+            },
+        });
+    });
+
+    // Fungsi untuk konfirmasi penghapusan
+    function confirmDelete(url) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Buat form dinamis untuk mengirim request DELETE
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = url;
+                form.style.display = 'none';
+
+                // Tambahkan CSRF token
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_token';
+                csrfToken.value = '{{ csrf_token() }}';
+                form.appendChild(csrfToken);
+
+                // Tambahkan method spoofing untuk DELETE
+                const method = document.createElement('input');
+                method.type = 'hidden';
+                method.name = '_method';
+                method.value = 'DELETE';
+                form.appendChild(method);
+
+                // Tambahkan form ke body dan submit
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
+</script>
+
+<style>
+    /* Override CSS Simple DataTables */
+    #table-kegiatan tbody td, 
+    #table-kegiatan tbody th, 
+    #table-kegiatan tfoot td, 
+    #table-kegiatan tfoot th, 
+    #table-kegiatan thead td, 
+    #table-kegiatan thead th {
+        vertical-align: middle !important; /* Memaksa alignment vertikal ke tengah */
+        text-align: center !important; /* Memaksa alignment horizontal ke tengah */
+    }
+
+    /* Khusus untuk kolom Deskripsi Kegiatan, alignment kiri */
+    #table-kegiatan tbody td:nth-child(3) {
+        text-align: left !important;
+    }
+
+    /* CSS tambahan untuk gambar */
+    #table-kegiatan tbody td img {
+        display: block;
+        margin: 0 auto; /* Memposisikan gambar di tengah */
+    }
+
+    /* CSS untuk profile picture */
+    .profile-picture-frame {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto;
+        border: 5px solid #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-picture {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
 @endsection

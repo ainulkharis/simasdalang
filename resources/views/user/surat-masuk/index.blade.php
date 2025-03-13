@@ -5,9 +5,9 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Surat Masuk</h3>
+                <h3>Data Surat Masuk</h3>
                 <p class="text-subtitle text-muted">
-                    Halaman Data Surat Masuk
+                    Halaman Semua Data Surat Masuk
                 </p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
@@ -43,7 +43,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive" style="max-width: 100%; overflow-x: auto;">
-                    <table class="table table-bordered" id="table">
+                    <table class="table table-bordered" id="table-surat-masuk">
                         <thead class="table-light">
                             <tr>
                                 <th class="text-center">No.</th>
@@ -60,7 +60,9 @@
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td class="text-center">{{ $surat->no_surat }}</td>
-                                    <td class="text-center" style="white-space: nowrap;">{{ \Carbon\Carbon::parse($surat->tanggal)->format('d-m-Y') }}</td>
+                                    <td class="text-center" style="white-space: nowrap;">
+                                        {{ \Carbon\Carbon::parse($surat->tanggal)->format('d-m-Y') }}
+                                    </td>
                                     <td>{{ $surat->asal_pengirim }}</td>
                                     <td class="text-center">
                                         @if($surat->file_pdf)
@@ -71,7 +73,7 @@
                                     </td>
                                     <td class="text-center">
                                         @if($surat->balasan_pdf)
-                                            <a href="{{ Storage::url($surat->balasan_pdf) }}" target="_blank">Lihat Balasan</a>
+                                            <a href="{{ Storage::url($surat->balasan_pdf) }}" target="_blank">Lihat Surat Balasan</a>
                                         @else
                                             Belum ada balasan
                                         @endif
@@ -85,7 +87,7 @@
                                             <form action="{{ route('user.surat-masuk.destroy', $surat->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="btn btn-danger btn-sm d-flex align-items-center" onclick="confirmDelete({{ $surat->id }})" style="line-height: 1;">
+                                                <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center" onclick="return confirmDelete(event, '{{ route('user.surat-masuk.destroy', $surat->id) }}')" style="line-height: 1;">
                                                     <i class="bi bi-trash" style="font-size: 16px; vertical-align: middle;"></i>
                                                     <span class="ms-1" style="vertical-align: middle;">Hapus</span>
                                                 </button>
@@ -102,35 +104,64 @@
     </section>
 </div>
 
-<!-- Modal Konfirmasi Hapus -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Penghapusan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Apakah Anda yakin ingin menghapus data ini?</p>
-            </div>
-            <div class="modal-footer">
-                <form id="deleteForm" action="" method="POST" class="d-inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Hapus</button>
-                </form>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="./assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    // Inisialisasi tabel dengan fitur sorting dinonaktifkan
+    // Fungsi untuk konfirmasi penghapusan dengan SweetAlert2
+    function confirmDelete(event, url) {
+        event.preventDefault(); // Mencegah form dikirim secara otomatis
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika pengguna mengonfirmasi, kirim form
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = url;
+                form.style.display = 'none';
+
+                // Tambahkan CSRF token
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_token';
+                csrfToken.value = '{{ csrf_token() }}';
+                form.appendChild(csrfToken);
+
+                // Tambahkan method spoofing untuk DELETE
+                const method = document.createElement('input');
+                method.type = 'hidden';
+                method.name = '_method';
+                method.value = 'DELETE';
+                form.appendChild(method);
+
+                // Tambahkan form ke body dan submit
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
+
+    // Script untuk Simple DataTables
     document.addEventListener("DOMContentLoaded", function() {
-        const dataTable = new simpleDatatables.DataTable("#table", {
-            sortable: false  // Matikan fitur sorting di semua kolom
+        const dataTable = new simpleDatatables.DataTable("#table-surat-masuk", {
+            searchable: true, // Aktifkan fitur pencarian
+            perPage: 10, // Jumlah baris per halaman
+            perPageSelect: [5, 10, 15, 20], // Opsi jumlah baris per halaman
+            labels: {
+                placeholder: "Cari data...", // Placeholder untuk input pencarian
+                searchTitle: "Cari di tabel", // Judul untuk fitur pencarian
+                perPage: "Baris per halaman", // Label untuk dropdown perPage
+                noRows: "Tidak ada data yang ditemukan", // Pesan jika tidak ada data
+                info: "Data {start} - {end} dari total {rows} data keseluruhan.", // Pesan info
+                noResults: "Tidak ada hasil yang cocok", // Pesan jika tidak ada hasil pencarian
+            },
         });
     });
 
@@ -151,13 +182,18 @@
             }, 3000); // Hilang setelah 3 detik
         }
     };
-
-    // Fungsi untuk menampilkan modal konfirmasi penghapusan
-    function confirmDelete(suratId) {
-        var formAction = "/surat-masuk/" + suratId;
-        document.getElementById("deleteForm").action = formAction;
-        var deleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-        deleteModal.show();
-    }
 </script>
+
+<style>
+    /* Pindahkan kolom pencarian ke kanan */
+    .datatable-search {
+        float: right; /* Pindahkan ke kanan */
+        margin-bottom: 10px; /* Beri jarak dari tabel */
+    }
+
+    /* Optional: Atur lebar input pencarian */
+    .datatable-search input {
+        width: 200px; /* Sesuaikan lebar input */
+    }
+</style>
 @endsection

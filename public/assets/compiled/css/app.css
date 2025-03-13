@@ -17962,6 +17962,92 @@ body .bi:before,
 .table-lg.dataTable-table tr th {
     padding: 1.3rem;
 }
+/* Warna header tabel untuk semua tabel */
+.datatable-table > thead > tr > th {
+    background-color: #ced4da; /* Warna biru (bisa disesuaikan) */
+    color: black; /* Warna teks putih agar kontras */
+    text-align: center !important;
+    vertical-align: middle !important;
+    border: 1px solid #ddd; /* Warna border */
+    padding: 12px 15px; /* Padding untuk header */
+}
+/* Warna header tabel untuk Activities */
+#table-activities.datatable-table > thead > tr > th {
+    background-color: #ced4da; /* Warna biru (bisa disesuaikan) */
+    color: black; /* Warna teks putih agar kontras */
+    text-align: center !important;
+    vertical-align: middle !important;
+    border: 1px solid #ddd; /* Warna border */
+    padding: 12px 15px; /* Padding untuk header */
+}
+/* Warna header tabel untuk Berita */
+#table-berita.datatable-table > thead > tr > th {
+    background-color: #ced4da; /* Warna biru (bisa disesuaikan) */
+    color: black; /* Warna teks putih agar kontras */
+    text-align: center !important;
+    vertical-align: middle !important;
+    border: 1px solid #ddd; /* Warna border */
+    padding: 12px 15px; /* Padding untuk header */
+}
+/* Warna header tabel untuk Peserta */
+#table-peserta.datatable-table > thead > tr > th {
+    background-color: #ced4da; /* Warna biru (bisa disesuaikan) */
+    color: black; /* Warna teks putih agar kontras */
+    text-align: center !important;
+    vertical-align: middle !important;
+    border: 1px solid #ddd; /* Warna border */
+    padding: 12px 15px; /* Padding untuk header */
+}
+/* Warna header tabel untuk Surat Masuk */
+#table-surat-masuk.datatable-table > thead > tr > th {
+    background-color: #ced4da; /* Warna biru (bisa disesuaikan) */
+    color: black; /* Warna teks putih agar kontras */
+    text-align: center !important;
+    vertical-align: middle !important;
+    border: 1px solid #ddd; /* Warna border */
+    padding: 12px 15px; /* Padding untuk header */
+}
+/* Override styling dari Simple DataTables untuk semua tabel */
+.datatable-table > thead > tr > th {
+    text-align: center !important; /* Pastikan teks di tengah */
+    vertical-align: middle !important; /* Pastikan vertikal di tengah */
+}
+/* Mengatur alignment untuk semua sel di tabel Activities */
+#table-activities.datatable-table > tbody > tr > td {
+    text-align: center !important; /* Teks di tengah secara horizontal */
+    vertical-align: middle !important; /* Teks di tengah secara vertikal */
+}
+/* Mengatur alignment untuk semua sel di tabel Berita */
+#table-berita.datatable-table > tbody > tr > td {
+    text-align: center !important; /* Teks di tengah secara horizontal */
+    vertical-align: middle !important; /* Teks di tengah secara vertikal */
+}
+/* Mengatur alignment untuk semua sel di tabel Peserta */
+#table-peserta.datatable-table > tbody > tr > td {
+    text-align: center !important; /* Teks di tengah secara horizontal */
+    vertical-align: middle !important; /* Teks di tengah secara vertikal */
+}
+/* Mengatur alignment untuk semua sel di tabel Surat Masuk */
+#table-surat-masuk.datatable-table > tbody > tr > td {
+    text-align: center !important; /* Teks di tengah secara horizontal */
+    vertical-align: middle !important; /* Teks di tengah secara vertikal */
+}
+/* Jika diperlukan, tambahkan selector yang lebih spesifik */
+#table-activities.datatable-table > tbody > tr > td.text-center,
+#table-berita.datatable-table > tbody > tr > td.text-center,
+#table-peserta.datatable-table > tbody > tr > td.text-center,
+#table-surat-masuk.datatable-table > tbody > tr > td.text-center {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+/* Hanya berlaku untuk tabel di menu Activities */
+#table-activities.datatable-table > tbody > tr > td:nth-child(3) {
+    text-align: left !important;
+}
+/* Override untuk kolom tanggal di menu Surat Masuk */
+#table-surat-masuk.datatable-table > tbody > tr > td:nth-child(3) {
+    text-align: center !important; /* Teks di tengah */
+}
 .dataTable-container {
     overflow-x: auto;
 }

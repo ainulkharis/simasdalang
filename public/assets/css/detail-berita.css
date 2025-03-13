@@ -1,0 +1,111 @@
+/* Gaya khusus untuk halaman detail berita */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+/* Konten Utama */
+.main {
+    padding: 20px 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Gaya untuk section-title */
+.section-title {
+    margin-bottom: 0; /* Menghapus margin bawah untuk mendekatkan ke gambar */
+}
+
+.section-title h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px; /* Jarak antara judul dan paragraf */
+    text-align: center;
+}
+
+.section-title p.text-muted {
+    font-size: 0.9rem;
+    color: #6c757d;
+    text-align: center;
+    margin-bottom: 0; /* Menghapus margin bawah untuk mendekatkan ke gambar */
+}
+
+/* Gaya untuk gambar */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 0; /* Menghapus margin atas untuk mendekatkan ke tulisan informasi publikasi */
+    margin-bottom: 10px; /* Jarak antara gambar dan deskripsi */
+}
+
+/* Gaya untuk deskripsi berita */
+.lead {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px; /* Jarak antara deskripsi dan tombol */
+}
+
+/* Gaya untuk tombol */
+.btn-outline-primary {
+    border: 2px solid #3498db;
+    color: #3498db;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: #3498db;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+}
+
+/* Additional styles for better alignment and spacing */
+.text-center {
+    text-align: center;
+}
+
+.mt-1 {
+    margin-top: 0.25rem; /* Margin atas yang sangat kecil untuk gambar */
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem; /* Margin bawah yang sangat kecil untuk tulisan informasi publikasi */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section-title h1 {
+        font-size: 1.75rem; /* Ukuran judul lebih kecil di HP */
+        margin-bottom: 10px;
+    }
+
+    .section-title p.text-muted {
+        font-size: 0.8rem; /* Ukuran teks lebih kecil di HP */
+        margin-bottom: 0; /* Menghapus margin bawah di HP */
+    }
+
+    .img-fluid {
+        margin-bottom: 5px; /* Jarak lebih kecil di HP */
+    }
+
+    .lead {
+        font-size: 0.95rem; /* Ukuran teks deskripsi lebih kecil di HP */
+        margin-bottom: 15px; /* Jarak lebih kecil di HP */
+    }
+
+    .btn-outline-primary {
+        padding: 8px 16px; /* Ukuran tombol lebih kecil di HP */
+        font-size: 0.9rem; /* Ukuran teks tombol lebih kecil di HP */
+    }
+}

@@ -60,7 +60,7 @@ class AdminSuratMasukController extends Controller
 
             // Simpan file balasan baru
             $file = $request->file('balasan_pdf');
-            $filePath = $file->store('balasan_surat', 'public'); // Simpan di storage
+            $filePath = $file->store('balasan_surat', 'public');
 
             // Simpan path ke database
             $surat->balasan_pdf = $filePath;

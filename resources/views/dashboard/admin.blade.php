@@ -5,9 +5,9 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Dashboard Admin</h3>
+                    <h3>Dashboard</h3>
                     <p class="text-subtitle text-muted">
-                        Halaman utama untuk admin
+                        Halaman Dashboard Pembimbing
                     </p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
@@ -17,7 +17,7 @@
                                 <a href="/admin/dashboard">Dashboard</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Admin Dashboard
+                                Pembimbing
                             </li>
                         </ol>
                     </nav>
@@ -37,8 +37,8 @@
                             </div>
                             <div class="card-body">
                                 <h1>{{ $jumlahUser }}</h1>
-                                <p>Total peserta yang terdaftar pada sistem</p>
-                                <a href="{{ route('admin.profile.admin-user') }}" class="btn btn-primary">Lihat Peserta</a>
+                                <p>Total peserta yang terdaftar pada sistem.</p>
+                                <a href="{{ route('admin.profile.admin-user') }}" class="btn btn-primary">Lihat Semua Peserta</a>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                             </div>
                             <div class="card-body">
                                 <h1>{{ $jumlahSuratMasuk }}</h1>
-                                <p>Total surat masuk yang diterima oleh sistem</p>
+                                <p>Total surat masuk yang diterima oleh sistem.</p>
                                 <a href="{{ route('admin.surat-masuk.index') }}" class="btn btn-primary">Lihat Surat Masuk</a>
                             </div>
                         </div>

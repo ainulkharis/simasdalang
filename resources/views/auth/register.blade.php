@@ -19,15 +19,18 @@
                     <h2>Register</h2>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
+                        {{-- Input Name --}}
                         <input type="text" name="name" placeholder="Nama Lengkap" value="{{ old('name') }}"
                             required>
                         @error('name')
                             <div class="error-message">{{ $message }}</div>
                         @enderror
+                        {{-- Input Email --}}
                         <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
                         @error('email')
                             <div class="error-message">{{ $message }}</div>
                         @enderror
+                        {{-- Input Password --}}
                         <div class="password-container" style="position: relative;">
                             <input type="password" name="password" id="password" placeholder="Password" required style="width: 100%; padding-right: 40px;">
 
@@ -38,6 +41,7 @@
                         @error('password')
                             <div class="error-message">{{ $message }}</div>
                         @enderror
+                        {{-- Input Password Confirmation --}}
                         <div class="password-container" style="position: relative;">
                             <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Konfirmasi Password" required style="width: 100%; padding-right: 40px;">
 
@@ -48,10 +52,11 @@
                         @error('password_confirmation')
                             <div class="error-message">{{ $message }}</div>
                         @enderror
+                        {{-- Submit Button --}}
                         <input type="submit" value="Register">
                     </form>
                     <p>Sudah punya akun? <a href="{{ route('login') }}">Login di sini</a></p>
-                    <p>Kembali ke <a href="/">Home</a></p>
+                    <p>Kembali ke <a href="/">Beranda</a></p>
                 </div>
             </div>
             <div class="col-md-6 info-container">

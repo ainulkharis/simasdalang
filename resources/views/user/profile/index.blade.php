@@ -7,7 +7,7 @@
             <div class="col-12 col-md-6 order-md-1 order-last">
                 <h3>Data Profil</h3>
                 <p class="text-subtitle text-muted">
-                    Halaman Profil
+                    Halaman Lengkap Data Profil
                 </p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="mt-4 text-center">
-                <a href="{{ route('user.profile.edit') }}" class="btn btn-primary float-end">Edit Profil</a>
+                <a href="{{ route('user.profile.edit') }}" class="btn btn-primary float-end">Perbarui Data Profil</a>
             </div>
         </div>
     </div>

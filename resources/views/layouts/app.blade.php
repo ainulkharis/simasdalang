@@ -13,38 +13,30 @@
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/app-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/error.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/iconly.css') }}" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.0.0/dist/style.css">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
-
 <body>
     <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
-
-        <!-- Start Sidebar -->
         @include('partials.sidebar')
-        <!-- End Sidebar -->
 
         <div id="main" class="layout-navbar navbar-fixed">
-
-            <!-- Start Header -->
             @include('partials.header')
-            <!-- End Header -->
 
             <div id="main-content">
                 @yield('content')
             </div>
 
-            <!-- Start Footer -->
             @include('partials.footer')
-            <!-- End Footer -->
-
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.0.0/dist/umd/simple-datatables.min.js"></script>
     <script src="{{ asset('assets/static/js/components/dark.js') }}"></script>
     <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/compiled/js/app.js') }}"></script>

@@ -27,7 +27,11 @@ class AdminController extends Controller
 
     public function index()
     {
-        $users = User::where('role', 'user')->get();
+        // Mengurutkan data berdasarkan kolom 'created_at' secara descending (dari yang terbaru)
+        $users = User::where('role', 'user')
+            ->orderBy('created_at', 'desc') // Urutkan berdasarkan created_at descending
+            ->get();
+            
         return view('admin.profile.admin-user', compact('users'));
     }
 
@@ -71,13 +75,12 @@ class AdminController extends Controller
         return view('admin.profile.admin-show', compact('user', 'activities'));
     }
 
-
     public function edit(User $user)
     {
         return view('admin.profile.admin-edit', compact('user'));
     }
 
-    public function admin_update(Request $request, User $user)
+    public function update(Request $request, User $user)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
