@@ -55,15 +55,15 @@ class ActivityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Activity $activity)
-    {
-        // Pastikan kegiatan milik user yang login
-        if ($activity->user_id !== Auth::id()) {
-            return redirect()->route('user.activities.index')->with('error', 'Anda tidak memiliki izin untuk melihat kegiatan ini.');
-        }
+    // public function show(Activity $activity)
+    // {
+    //     // Pastikan kegiatan milik user yang login
+    //     if ($activity->user_id !== Auth::id()) {
+    //         return redirect()->route('user.activities.index')->with('error', 'Anda tidak memiliki izin untuk melihat kegiatan ini.');
+    //     }
 
-        return view('user.activities.show', compact('activity'));
-    }
+    //     return view('user.activities.show', compact('activity'));
+    // }
 
     /**
      * Show the form for editing the specified resource.

@@ -102,6 +102,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // DASHBOARD UNTUK USER (PESERTA)
     Route::prefix('user')->name('user.')->middleware('user')->group(function () {
+
+        // Dashboard User
         Route::get('dashboard', function () {
             return view('dashboard.index');
         })->name('dashboard');
@@ -120,6 +122,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // DASHBOARD UNTUK ADMIN (PEMBIMBING)
     Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin'])->group(function () {
+        
         // Dashboard Admin
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
@@ -128,24 +131,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('profile/create', [AdminController::class, 'create'])->name('profile.create');
         Route::post('profile', [AdminController::class, 'store'])->name('profile.store');
         Route::get('profile/{user}', [AdminController::class, 'show'])->name('profile.show');
+        Route::get('profile/{user}/edit', [AdminController::class, 'edit'])->name('profile.edit');
+        Route::put('profile/{user}', [AdminController::class, 'update'])->name('profile.update');
         Route::delete('profile/{user}', [AdminController::class, 'destroy'])->name('profile.destroy');
 
         // Rute untuk edit dan update profil admin
         // Route::get('profile/{user}/edit', [AdminController::class, 'editProfile'])->name('profile.edit');
         // Route::put('profile/{user}', [AdminController::class, 'updateProfile'])->name('profile.update');
         
-        Route::get('profile/{user}/edit', [AdminController::class, 'edit'])->name('profile.edit');
-        Route::put('profile/{user}', [AdminController::class, 'update'])->name('profile.update');
-        
         // Menu untuk mengelola kegiatan peserta
-        Route::get('activities/{activity}/edit', [AdminController::class, 'editActivity'])->name('activities.edit');
-        Route::put('activities/{activity}', [AdminController::class, 'updateActivity'])->name('activities.update');
+        // Route::get('activities/{activity}/edit', [AdminController::class, 'editActivity'])->name('activities.edit');
+        // Route::put('activities/{activity}', [AdminController::class, 'updateActivity'])->name('activities.update');
 
         // Menu Surat Masuk Admin
         Route::get('surat-masuk', [AdminSuratMasukController::class, 'index'])->name('surat-masuk.index');
         Route::get('surat-masuk/{surat_masuk}/edit', [AdminSuratMasukController::class, 'edit'])->name('surat-masuk.edit');
         Route::delete('surat-masuk/{surat_masuk}', [AdminSuratMasukController::class, 'destroy'])->name('surat-masuk.destroy');
-
+        // Route untuk balas surat
         Route::post('surat-masuk/{id}/balas', [AdminSuratMasukController::class, 'balasSurat'])->name('surat-masuk.balas');
 
         // Menu Kelola Berita
