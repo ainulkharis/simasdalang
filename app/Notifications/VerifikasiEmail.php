@@ -35,7 +35,7 @@ class VerifikasiEmail extends Notification
         return (new MailMessage)
             ->subject('Verifikasi Alamat Email')
             ->greeting('Halo!')
-            ->line('Silakan klik tombol di bawah ini untuk memverifikasi alamat email Anda.')
+            ->line('Silahkan klik tombol di bawah ini untuk memverifikasi alamat email Anda.')
             ->action('Verifikasi Alamat Email', $verificationUrl)
             ->line('Jika Anda tidak pernah merasa membuat akun, Anda dapat mengabaikan email ini.')
             ->salutation('Salam, Tim Simasdalang');

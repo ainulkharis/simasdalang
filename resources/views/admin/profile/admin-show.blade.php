@@ -29,7 +29,10 @@
         <div class="card-body position-relative">
             <div class="text-center mb-4" style="margin-top: -50px;">
                 <div class="profile-picture-frame">
-                    <img src="{{ asset('storage/' . $user->photo) }}" alt="Foto Profil" class="profile-picture">
+                    <!-- Tampilkan foto profil, jika tidak ada gunakan foto default -->
+                    <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('assets/compiled/jpg/profile.jpg') }}" 
+                         alt="Foto Profil" 
+                         class="profile-picture">
                 </div>
             </div>
             <div class="row">
@@ -130,9 +133,9 @@
                 placeholder: "Cari data...", // Placeholder untuk input pencarian
                 searchTitle: "Cari di tabel", // Judul untuk fitur pencarian
                 perPage: "Baris per halaman", // Label untuk dropdown perPage
-                noRows: "Tidak ada data yang ditemukan", // Pesan jika tidak ada data
-                info: "Data {start} - {end} dari total {rows} data keseluruhan.", // Pesan info
-                noResults: "Tidak ada hasil yang cocok", // Pesan jika tidak ada hasil pencarian
+                noRows: "Belum ada data.", // Pesan jika tidak ada data
+                info: "Menampilkan {start} - {end} dari {rows} data keseluruhan.", // Pesan info
+                noResults: "Tidak ada hasil yang ditemukan.", // Pesan jika tidak ada hasil pencarian
             },
         });
     });

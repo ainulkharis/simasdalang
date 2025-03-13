@@ -85,7 +85,7 @@ class AuthController extends Controller
         // Cek hasil validasi
         if ($validationResult['deliverability'] !== 'DELIVERABLE' || $validationResult['is_valid_format']['value'] !== true) {
             return back()->withErrors([
-                'email' => 'Email tidak valid atau tidak terdaftar.',
+                'email' => 'Email tidak valid, silahkan gunakan email lain.',
             ])->onlyInput('email');
         }
 
@@ -130,7 +130,7 @@ class AuthController extends Controller
         // Kirim email reset password
         $user->sendPasswordResetNotification($token);
 
-        session()->flash('status', 'Link reset password telah dikirim ke alamat email Anda. Silakan periksa <strong>kotak masuk</strong> atau <strong>folder spam</strong> pada email Anda.');
+        session()->flash('status', 'Link reset password telah dikirim ke alamat email Anda. Silahkan periksa <strong>kotak masuk</strong> atau <strong>folder spam</strong> pada email Anda.');
         return back();
     }
 

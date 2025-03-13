@@ -35,22 +35,22 @@
                         {{-- Tombol Previous --}}
                         @if ($berita->onFirstPage())
                             <li class="page-item disabled">
-                                <span class="page-link">&laquo; Previous</span>
+                                <span class="page-link">&laquo; Sebelumnya</span>
                             </li>
                         @else
                             <li class="page-item">
-                                <a class="page-link" href="{{ $berita->previousPageUrl() }}" rel="prev">&laquo; Previous</a>
+                                <a class="page-link" href="{{ $berita->previousPageUrl() }}" rel="prev">&laquo; Sebelumnya</a>
                             </li>
                         @endif
 
                         {{-- Tombol Next --}}
                         @if ($berita->hasMorePages())
                             <li class="page-item">
-                                <a class="page-link" href="{{ $berita->nextPageUrl() }}" rel="next">Next &raquo;</a>
+                                <a class="page-link" href="{{ $berita->nextPageUrl() }}" rel="next">Selanjutnya &raquo;</a>
                             </li>
                         @else
                             <li class="page-item disabled">
-                                <span class="page-link">Next &raquo;</span>
+                                <span class="page-link">Selanjutnya &raquo;</span>
                             </li>
                         @endif
                     </ul>
@@ -60,7 +60,7 @@
             <!-- Informasi "Showing X to Y of Z results" -->
             <div class="text-center mt-3">
                 <p class="text-muted">
-                    Showing {{ $berita->firstItem() }} to {{ $berita->lastItem() }} of {{ $berita->total() }} results
+                    Menampilkan {{ $berita->firstItem() }} - {{ $berita->lastItem() }} dari {{ $berita->total() }} data keseluruhan.
                 </p>
             </div>
         </div>

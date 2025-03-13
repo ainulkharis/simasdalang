@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-  <!-- Hero Section -->
+
   <section id="hero" class="hero section">
 
     <div class="container">
@@ -19,5 +19,5 @@
       </div>
     </div>
 
-  </section><!-- /Hero Section -->  
+  </section>
 @endsection

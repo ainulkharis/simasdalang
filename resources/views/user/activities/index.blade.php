@@ -160,9 +160,9 @@
                 placeholder: "Cari data...", // Placeholder untuk input pencarian
                 searchTitle: "Cari di tabel", // Judul untuk fitur pencarian
                 perPage: "Baris per halaman", // Label untuk dropdown perPage
-                noRows: "Tidak ada data yang ditemukan", // Pesan jika tidak ada data
-                info: "Data {start} - {end} dari total {rows} data keseluruhan.", // Pesan info
-                noResults: "Tidak ada hasil yang cocok", // Pesan jika tidak ada hasil pencarian
+                noRows: "Belum ada data.", // Pesan jika tidak ada data
+                info: "Menampilkan {start} - {end} dari {rows} data keseluruhan.", // Pesan info
+                noResults: "Tidak ada hasil yang ditemukan.", // Pesan jika tidak ada hasil pencarian
             },
         });
     });
