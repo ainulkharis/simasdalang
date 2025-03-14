@@ -60,39 +60,41 @@
             <h4 class="card-title">Kegiatan Peserta</h4>
         </div>
         <div class="card-body">
-            <table class="table table-bordered" id="table-kegiatan">
-                <thead class="table-light">
-                    <tr>
-                        <th class="text-center">No</th>
-                        <th class="text-center">Tanggal Kegiatan</th>
-                        <th>Deskripsi Kegiatan</th>
-                        <th class="text-center">Foto Kegiatan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($activities as $activity)
+            <div class="table-responsive" style="max-width: 100%; overflow-x: auto;">
+                <table class="table table-bordered" id="table-kegiatan">
+                    <thead class="table-light">
                         <tr>
-                            <td class="text-center align-middle">{{ $loop->iteration }}</td>
-                            <td class="text-center align-middle">{{ \Carbon\Carbon::parse($activity->date)->format('d-m-Y') }}</td>
-                            <td class="align-middle">{{ $activity->description }}</td>
-                            <td class="text-center align-middle">
-                                @if ($activity->photo)
-                                    <img src="{{ asset('storage/' . $activity->photo) }}" 
-                                         alt="Foto Kegiatan" 
-                                         style="width: 100px; height: auto; cursor: pointer; display: block; margin: 0 auto;" 
-                                         onclick="showPreview('{{ asset('storage/' . $activity->photo) }}')">
-                                @else
-                                    Tidak ada foto
-                                @endif
-                            </td>
+                            <th class="text-center">No</th>
+                            <th class="text-center">Tanggal Kegiatan</th>
+                            <th>Deskripsi Kegiatan</th>
+                            <th class="text-center">Foto Kegiatan</th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="text-center">Belum ada kegiatan</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @forelse ($activities as $activity)
+                            <tr>
+                                <td class="text-center align-middle">{{ $loop->iteration }}</td>
+                                <td class="text-center align-middle">{{ \Carbon\Carbon::parse($activity->date)->format('d-m-Y') }}</td>
+                                <td class="align-middle">{{ $activity->description }}</td>
+                                <td class="text-center align-middle">
+                                    @if ($activity->photo)
+                                        <img src="{{ asset('storage/' . $activity->photo) }}" 
+                                             alt="Foto Kegiatan" 
+                                             style="width: 100px; height: auto; cursor: pointer; display: block; margin: 0 auto;" 
+                                             onclick="showPreview('{{ asset('storage/' . $activity->photo) }}')">
+                                    @else
+                                        Tidak ada foto
+                                    @endif
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center">Belum ada kegiatan</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -139,46 +141,6 @@
             },
         });
     });
-
-    // Fungsi untuk konfirmasi penghapusan
-    function confirmDelete(url) {
-        Swal.fire({
-            title: 'Apakah Anda yakin?',
-            text: "Data yang dihapus tidak dapat dikembalikan!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Buat form dinamis untuk mengirim request DELETE
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = url;
-                form.style.display = 'none';
-
-                // Tambahkan CSRF token
-                const csrfToken = document.createElement('input');
-                csrfToken.type = 'hidden';
-                csrfToken.name = '_token';
-                csrfToken.value = '{{ csrf_token() }}';
-                form.appendChild(csrfToken);
-
-                // Tambahkan method spoofing untuk DELETE
-                const method = document.createElement('input');
-                method.type = 'hidden';
-                method.name = '_method';
-                method.value = 'DELETE';
-                form.appendChild(method);
-
-                // Tambahkan form ke body dan submit
-                document.body.appendChild(form);
-                form.submit();
-            }
-        });
-    }
 </script>
 
 <style>
@@ -219,6 +181,17 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+
+    /* Pindahkan kolom pencarian ke kanan */
+    .datatable-search {
+        float: right; /* Pindahkan ke kanan */
+        margin-bottom: 10px; /* Beri jarak dari tabel */
+    }
+
+    /* Optional: Atur lebar input pencarian */
+    .datatable-search input {
+        width: 200px; /* Sesuaikan lebar input */
     }
 </style>
 @endsection
