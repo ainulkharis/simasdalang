@@ -17,18 +17,25 @@ class TrackVisitors
         $visitorIp = $request->ip(); // Ambil IP pengguna
         $hashedIp = hash('sha256', $visitorIp); // Hash IP pengguna
 
-        // Cek apakah pengunjung dengan IP ini sudah mengakses hari ini
-        $visitor = Visitor::where('visit_date', $today)
-            ->where('visitor_ip', $hashedIp)
-            ->first();
+        // Cek apakah sudah ada record untuk hari ini
+        $visitor = Visitor::where('visit_date', $today)->first();
 
-        // Jika belum, tambahkan record baru
         if (!$visitor) {
+            // Jika belum ada, buat record baru
             Visitor::create([
                 'visit_date' => $today,
-                'visitor_ip' => $hashedIp,
                 'visit_count' => 1, // Set visit_count ke 1
+                'visitor_ips' => $hashedIp, // Simpan IP pertama
             ]);
+        } else {
+            // Jika sudah ada, periksa apakah IP sudah tercatat
+            $existingIps = explode(',', $visitor->visitor_ips ?? ''); // Ambil daftar IP yang sudah ada
+            if (!in_array($hashedIp, $existingIps)) {
+                $visitor->increment('visit_count'); // Tambahkan visit_count
+                $existingIps[] = $hashedIp; // Tambahkan IP baru ke daftar
+                $visitor->visitor_ips = implode(',', $existingIps); // Simpan daftar IP yang diperbarui
+                $visitor->save();
+            }
         }
 
         return $next($request);

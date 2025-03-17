@@ -18,7 +18,7 @@ use Carbon\Carbon;
 // ROUTE UNTUK SEMUA PENGGUNA (TANPA LOGIN)
 Route::get('/', function () {
     $today = Carbon::today()->toDateString();
-    $visitorCount = Visitor::where('visit_date', $today)->count();
+    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
 
     return view('home', [
         'title' => 'Home',

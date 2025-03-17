@@ -13,7 +13,7 @@ class VisitorController extends Controller
         $today = Carbon::today()->toDateString(); // Ambil tanggal hari ini
 
         // Hitung jumlah pengunjung unik hari ini
-        $visitorCount = Visitor::where('visit_date', $today)->count();
+        $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
 
         return view('home', [
             'title' => 'Home',
@@ -27,7 +27,7 @@ class VisitorController extends Controller
         $visitors = Visitor::orderBy('visit_date', 'desc')->paginate(10); // 10 data per halaman
 
         // Hitung total pengunjung unik
-        $totalUniqueVisitors = Visitor::distinct('visitor_ip')->count('visitor_ip');
+        $totalUniqueVisitors = Visitor::sum('visit_count');
 
         // Kirim data ke view
         return view('admin.visitors', [
