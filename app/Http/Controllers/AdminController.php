@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\User;
 use App\Models\SuratMasuk;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -21,8 +23,12 @@ class AdminController extends Controller
         // Ambil jumlah surat masuk
         $jumlahSuratMasuk = SuratMasuk::count();
 
+        // Ambil jumlah pengunjung unik hari ini
+        $today = Carbon::today()->toDateString();
+        $visitorCountToday = Visitor::where('visit_date', $today)->count();
+
         // Kirim data ke view
-        return view('dashboard.admin', compact('jumlahUser', 'jumlahSuratMasuk'));
+        return view('dashboard.admin', compact('jumlahUser', 'jumlahSuratMasuk', 'visitorCountToday'));
     }
 
     public function index()

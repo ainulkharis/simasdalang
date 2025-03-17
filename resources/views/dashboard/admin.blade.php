@@ -43,18 +43,6 @@
                         </div>
                     </div>
 
-                    <!-- <div class="col-12 col-md-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Kegiatan</h4>
-                            </div>
-                            <div class="card-body">
-                                <p>Kelola dan pantau kegiatan yang dilakukan oleh pengguna</p>
-                                <a href="{{ route('user.activities.index') }}" class="btn btn-primary">Lihat Kegiatan</a>
-                            </div>
-                        </div>
-                    </div> -->
-
                     <!-- Card Jumlah Surat Masuk -->
                     <div class="col-12 col-md-4">
                         <div class="card h-100">
@@ -65,6 +53,20 @@
                                 <h1>{{ $jumlahSuratMasuk }}</h1>
                                 <p>Total surat masuk yang diterima oleh sistem.</p>
                                 <a href="{{ route('admin.surat-masuk.index') }}" class="btn btn-primary">Lihat Surat Masuk</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Statistik Pengunjung -->
+                    <div class="col-12 col-md-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h4>Statistik Pengunjung</h4>
+                            </div>
+                            <div class="card-body">
+                                <h1>{{ $visitorCountToday }}</h1>
+                                <p>Jumlah statistik pengunjung pada sistem.</p>
+                                <a href="{{ route('admin.visitors') }}" class="btn btn-primary">Lihat Statistik Lengkap</a>
                             </div>
                         </div>
                     </div>

@@ -7,17 +7,25 @@ use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminSuratMasukController;
 use App\Http\Controllers\AdminBeritaController;
+use App\Http\Controllers\VisitorController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Models\Visitor;
+use Carbon\Carbon;
+use App\Http\Middleware\TrackVisitors;
 
 // ROUTE UNTUK SEMUA PENGGUNA (tidak perlu login)
 Route::get('/', function () {
+    $today = Carbon::today()->toDateString();
+    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
+
     return view('home', [
         'title' => 'Home',
+        'visitorCount' => $visitorCount,
     ]);
-});
+})->middleware(TrackVisitors::class);
 
 // Route::get('/kegiatan', function () {
 //     return view('posts', [
@@ -154,5 +162,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('berita', AdminBeritaController::class)->parameters([
             'berita' => 'berita:slug'
         ]);
+
+        // // Route untuk statistik pengunjung
+        // Route::get('/admin/visitors', [VisitorController::class, 'showVisitorStats'])->name('admin.visitors');
+
+        // Route untuk statistik pengunjung
+        Route::get('visitors', [VisitorController::class, 'showVisitorStats'])->name('visitors');
     });
 });

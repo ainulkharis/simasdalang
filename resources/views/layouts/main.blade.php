@@ -43,6 +43,11 @@
         {{-- <p>© <span>Copyright</span><strong class="px-1 sitename">Simasdalang</strong><span>All Rights Reserved</span></p> --}}
         <p>{{ date('Y') }} &copy;<strong class="px-1 sitename">Simasdalang -</strong>Dinkominfotik Kab. Brebes</p>
       </div>
+      <div class="text-center mt-2">
+        <p>
+          <i class="bi bi-eye" style="font-size: 1rem; color: #007bff;"></i> Jumlah Kunjungan Hari Ini: {{ $visitorCount }}
+        </p>
+      </div>
       {{-- <div class="social-links d-flex justify-content-center">
         <a href=""><i class="bi bi-twitter-x"></i></a>
         <a href=""><i class="bi bi-facebook"></i></a>
