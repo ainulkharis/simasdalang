@@ -3,7 +3,6 @@
 @section('content')
 
   <section id="about" class="about section">
-
     <div class="container section-title" data-aos="fade-up">
       <h2>Tentang</h2>
       <p>Sistem Informasi Manajemen Data PKL dan Magang (Simasdalang)</p>
@@ -43,6 +42,5 @@
         </div>
       </div>
     </div>
-    
   </section>
 @endsection

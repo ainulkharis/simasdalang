@@ -6,7 +6,7 @@
             <!-- Judul dan Informasi Publikasi -->
             <div class="section-title">
                 <h1>{{ $berita->judul }}</h1>
-                <p class="text-muted mb-2"> <!-- Margin bawah kecil untuk keterangan -->
+                <p class="text-muted mb-2">
                     Dipublikasikan pada: {{ $berita->created_at->translatedFormat('d F Y') }} | 
                     Oleh: Admin | 
                     Kategori: Berita Kegiatan
@@ -14,7 +14,7 @@
             </div>
 
             <!-- Gambar Berita -->
-            <div class="row justify-content-center mb-3"> <!-- Margin bawah kecil untuk gambar -->
+            <div class="row justify-content-center mb-3">
                 <div class="col-12 col-lg-8">
                     @if ($berita->gambar)
                         <img src="{{ asset('storage/' . $berita->gambar) }}" class="img-fluid" alt="{{ $berita->judul }}" loading="lazy">

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
-            $table->date('visit_date')->unique(); // Tanggal kunjungan (unik)
-            $table->integer('visit_count')->default(0); // Jumlah kunjungan
-            $table->timestamps(); // Kolom created_at dan updated_at
+            $table->date('visit_date');
+            $table->string('visitor_ip');
+            $table->timestamps();
         });
     }
 

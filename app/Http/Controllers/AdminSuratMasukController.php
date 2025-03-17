@@ -4,16 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SuratMasuk;
-use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon; 
+use Illuminate\Support\Facades\Storage; 
 
 class AdminSuratMasukController extends Controller
 {
     public function index()
     {
-        // Ambil semua data Surat Masuk dari database
-        // $suratMasuk = SuratMasuk::all(); 
-
         // Ambil semua data Surat Masuk dari database dan urutkan berdasarkan tanggal
         $suratMasuk = SuratMasuk::orderBy('tanggal', 'desc')->get(); 
 

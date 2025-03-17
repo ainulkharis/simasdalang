@@ -45,7 +45,7 @@
       </div>
       <div class="text-center mt-2">
         <p>
-          <i class="bi bi-bar-chart" style="font-size: 1rem; color: #007bff;"></i> Jumlah Kunjungan Hari Ini: {{ $visitorCount }}
+          <i class="bi bi-bar-chart" style="font-size: 1rem; color: #007bff;"></i> Jumlah Kunjungan Hari Ini: {{ $visitorCount ?? 0 }}
         </p>
       </div>
       {{-- <div class="social-links d-flex justify-content-center">

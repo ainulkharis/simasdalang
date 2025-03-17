@@ -152,7 +152,7 @@ class AdminController extends Controller
 
     public function editProfile(User $user)
     {
-        // Pastikan hanya admin yang bisa mengedit profilnya sendiri
+        // Memastikan hanya admin yang bisa mengedit profilnya sendiri
         if ($user->id !== Auth::user()->id) {
             return redirect()->route('admin.dashboard')->with('error', 'Anda tidak memiliki akses untuk mengedit profil ini.');
         }
@@ -162,7 +162,7 @@ class AdminController extends Controller
 
     public function updateProfile(Request $request, User $user)
     {
-        // Pastikan hanya admin yang bisa memperbarui profilnya sendiri
+        // Memastikan hanya admin yang bisa memperbarui profilnya sendiri
         if ($user->id !== Auth::user()->id) {
             return redirect()->route('admin.dashboard')->with('error', 'Anda tidak memiliki akses untuk memperbarui profil ini.');
         }

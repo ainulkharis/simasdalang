@@ -13,8 +13,6 @@ class SuratMasukController extends Controller
      */
     public function index()
     {
-        // $suratMasuk = SuratMasuk::all(); // Menampilkan semua surat masuk
-
         // Ambil semua data surat masuk beserta balasan PDF
         $suratMasuk = SuratMasuk::orderBy('tanggal', 'desc')->get();
         

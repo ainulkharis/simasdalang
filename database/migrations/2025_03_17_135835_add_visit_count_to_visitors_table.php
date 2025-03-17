@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('visitors', function (Blueprint $table) {
-            // Tambahkan kolom visitor_ip
-            $table->string('visitor_ip', 45)->nullable()->after('visit_count');
+            $table->integer('visit_count')->default(0)->after('visit_date');
         });
     }
 
@@ -23,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('visitors', function (Blueprint $table) {
-            // Hapus kolom visitor_ip
-            $table->dropColumn('visitor_ip');
+            $table->dropColumn('visit_count');
         });
     }
 };

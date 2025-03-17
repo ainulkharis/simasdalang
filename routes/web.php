@@ -14,18 +14,17 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Models\Visitor;
 use Carbon\Carbon;
-use App\Http\Middleware\TrackVisitors;
 
-// ROUTE UNTUK SEMUA PENGGUNA (tidak perlu login)
+// ROUTE UNTUK SEMUA PENGGUNA (TANPA LOGIN)
 Route::get('/', function () {
     $today = Carbon::today()->toDateString();
-    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
+    $visitorCount = Visitor::where('visit_date', $today)->count();
 
     return view('home', [
         'title' => 'Home',
         'visitorCount' => $visitorCount,
     ]);
-})->middleware(TrackVisitors::class);
+});
 
 // Route::get('/kegiatan', function () {
 //     return view('posts', [
@@ -143,14 +142,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('profile/{user}', [AdminController::class, 'update'])->name('profile.update');
         Route::delete('profile/{user}', [AdminController::class, 'destroy'])->name('profile.destroy');
 
-        // Rute untuk edit dan update profil admin
-        // Route::get('profile/{user}/edit', [AdminController::class, 'editProfile'])->name('profile.edit');
-        // Route::put('profile/{user}', [AdminController::class, 'updateProfile'])->name('profile.update');
-        
-        // Menu untuk mengelola kegiatan peserta
-        // Route::get('activities/{activity}/edit', [AdminController::class, 'editActivity'])->name('activities.edit');
-        // Route::put('activities/{activity}', [AdminController::class, 'updateActivity'])->name('activities.update');
-
         // Menu Surat Masuk Admin
         Route::get('surat-masuk', [AdminSuratMasukController::class, 'index'])->name('surat-masuk.index');
         Route::get('surat-masuk/{surat_masuk}/edit', [AdminSuratMasukController::class, 'edit'])->name('surat-masuk.edit');
@@ -162,9 +153,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('berita', AdminBeritaController::class)->parameters([
             'berita' => 'berita:slug'
         ]);
-
-        // // Route untuk statistik pengunjung
-        // Route::get('/admin/visitors', [VisitorController::class, 'showVisitorStats'])->name('admin.visitors');
 
         // Route untuk statistik pengunjung
         Route::get('visitors', [VisitorController::class, 'showVisitorStats'])->name('visitors');

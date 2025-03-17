@@ -11,6 +11,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        
         // Middleware global untuk semua request
         $middleware->append(\App\Http\Middleware\TrackVisitors::class);
 

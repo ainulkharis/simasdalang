@@ -3,7 +3,6 @@
 @section('content')
 
   <section id="contact" class="contact section" style="margin-bottom: 20px;">
-
     <div class="container section-title" data-aos="fade-up">
       <h2>Kontak</h2>
       <p>Hubungi kami jika ada hal yang perlu ditanyakan, melalui informasi di bawah ini:</p>
@@ -37,6 +36,5 @@
         </div>
       </div>
     </div>
-    
   </section>
 @endsection

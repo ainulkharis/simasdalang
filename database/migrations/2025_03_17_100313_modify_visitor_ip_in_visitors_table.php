@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('visitors', function (Blueprint $table) {
             // Ubah tipe data dan panjang kolom visitor_ip
-            $table->string('visitor_ip', 60)->change();
+            $table->string('visitor_ip', 64)->change();
         });
     }
 
