@@ -26,13 +26,11 @@ class TrackVisitors
 
         // Jika belum, tambahkan record baru
         if (!$visitor) {
-            Visitor::updateOrCreate(
-                ['visit_date' => $today], // Cari berdasarkan tanggal
-                [
-                    'visitor_ip' => $hashedIp, // Simpan hash IP
-                    'visit_count' => 1, // Tambah visit_count
-                ]
-            );
+            Visitor::create([
+                'visit_date' => $today, // Tanggal hari ini
+                'visitor_ip' => $hashedIp, // Simpan hash IP
+                'visit_count' => 1, // Set visit_count ke 1
+            ]);
         }
 
         return $next($request);
