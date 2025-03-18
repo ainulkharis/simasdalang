@@ -66,7 +66,7 @@
                         <tr>
                             <th class="text-center">No</th>
                             <th class="text-center">Tanggal Kegiatan</th>
-                            <th>Deskripsi Kegiatan</th>
+                            <th class="text-center">Deskripsi Kegiatan</th>
                             <th class="text-center">Foto Kegiatan</th>
                         </tr>
                     </thead>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class SuratMasukController extends Controller
 {
@@ -14,7 +15,12 @@ class SuratMasukController extends Controller
     public function index()
     {
         // Ambil semua data surat masuk beserta balasan PDF
-        $suratMasuk = SuratMasuk::orderBy('tanggal', 'desc')->get();
+        // $suratMasuk = SuratMasuk::orderBy('tanggal', 'desc')->get();
+
+        // Ambil data surat masuk berdasarkan user_id dari pengguna yang sedang login
+        $suratMasuk = SuratMasuk::where('user_id', \Illuminate\Support\Facades\Auth::user()->id)
+            ->orderBy('tanggal', 'desc')
+            ->get();
         
         return view('user.surat-masuk.index', compact('suratMasuk'));
     }
@@ -67,6 +73,11 @@ class SuratMasukController extends Controller
      */
     public function edit(SuratMasuk $suratMasuk)
     {
+        // Pastikan hanya pemilik surat yang dapat mengedit
+        if ($suratMasuk->user_id !== \Illuminate\Support\Facades\Auth::user()->id) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return view('user.surat-masuk.edit', compact('suratMasuk')); // Menampilkan form edit surat masuk
     }
 
@@ -75,6 +86,11 @@ class SuratMasukController extends Controller
      */
     public function update(Request $request, SuratMasuk $suratMasuk)
     {
+        // Pastikan hanya pemilik surat yang dapat mengupdate
+        if ($suratMasuk->user_id !== \Illuminate\Support\Facades\Auth::user()->id) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $validatedData = $request->validate([
             'no_surat' => 'required|string|unique:surat_masuks,no_surat,' . $suratMasuk->id, // Validasi untuk nomor surat dengan pengecualian surat yang sedang diedit
             'tanggal' => 'required|date',
@@ -105,6 +121,11 @@ class SuratMasukController extends Controller
      */
     public function destroy(SuratMasuk $suratMasuk)
     {
+        // Pastikan hanya pemilik surat yang dapat menghapus
+        if ($suratMasuk->user_id !== \Illuminate\Support\Facades\Auth::user()->id) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // Menghapus file PDF jika ada
         if ($suratMasuk->file_pdf && Storage::disk('public')->exists($suratMasuk->file_pdf)) {
             Storage::disk('public')->delete($suratMasuk->file_pdf);
