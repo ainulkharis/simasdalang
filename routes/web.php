@@ -26,33 +26,49 @@ Route::get('/', function () {
     ]);
 });
 
-// Route::get('/kegiatan', function () {
-//     return view('posts', [
-//         'title' => 'Kegiatan'
-//     ]);
-// });
-
 Route::get('/berita', function () {
+    $today = Carbon::today()->toDateString();
+    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
+
     $berita = \App\Models\Berita::latest()->paginate(6);
 
-    return view('news', ['title' => 'Berita', 'berita' => $berita]);
+    return view('news', [
+        'title' => 'Berita', 
+        'berita' => $berita,
+        'visitorCount' => $visitorCount
+    ]);
 })->name('berita');
 
 Route::get('/berita/{slug}', function ($slug) {
+    $today = Carbon::today()->toDateString();
+    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
+
     $berita = \App\Models\Berita::where('slug', $slug)->firstOrFail();
 
-    return view('news-detail', ['title' => 'Detail Berita', 'berita' => $berita]);
+    return view('news-detail', [
+        'title' => 'Detail Berita', 
+        'berita' => $berita,
+        'visitorCount' => $visitorCount
+    ]);
 })->name('berita.detail');
 
 Route::get('/tentang', function () {
+    $today = Carbon::today()->toDateString();
+    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
+
     return view('about', [
-        'title' => 'Tentang'
+        'title' => 'Tentang',
+        'visitorCount' => $visitorCount
     ]);
 });
 
 Route::get('/kontak', function () {
+    $today = Carbon::today()->toDateString();
+    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
+
     return view('contact', [
-        'title' => 'Kontak'
+        'title' => 'Kontak',
+        'visitorCount' => $visitorCount
     ]);
 });
 
