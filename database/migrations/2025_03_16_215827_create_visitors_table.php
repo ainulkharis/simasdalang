@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
             $table->date('visit_date');
-            $table->string('visitor_ip');
+            $table->integer('visit_count')->default(0);
+            $table->longText('visitor_ips');
             $table->timestamps();
         });
     }

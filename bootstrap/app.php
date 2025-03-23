@@ -11,15 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        
-        // Middleware global untuk semua request
-        $middleware->append(\App\Http\Middleware\TrackVisitors::class);
-
         // Middleware alias
         $middleware->alias([
             'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
-            'user' => \App\Http\Middleware\EnsureUserIsUser::class
+            'user' => \App\Http\Middleware\EnsureUserIsUser::class,
+            'track.visitors' => \App\Http\Middleware\TrackVisitors::class,
         ]);
+
+        // Jika ingin menjalankan middleware ini secara global (untuk semua request)
+        // $middleware->append(\App\Http\Middleware\TrackVisitors::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

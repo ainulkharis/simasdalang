@@ -24,7 +24,7 @@ class Visitor extends Model
     protected $fillable = [
         'visit_date',
         'visit_count',
-        'visitor_ip',
+        'visitor_ips',
     ];
 
     /**

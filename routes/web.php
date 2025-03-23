@@ -12,64 +12,14 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
-use App\Models\Visitor;
-use Carbon\Carbon;
 
-// ROUTE UNTUK SEMUA PENGGUNA (TANPA LOGIN)
-Route::get('/', function () {
-    $today = Carbon::today()->toDateString();
-    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
-
-    return view('home', [
-        'title' => 'Home',
-        'visitorCount' => $visitorCount,
-    ]);
-});
-
-Route::get('/berita', function () {
-    $today = Carbon::today()->toDateString();
-    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
-
-    $berita = \App\Models\Berita::latest()->paginate(6);
-
-    return view('news', [
-        'title' => 'Berita', 
-        'berita' => $berita,
-        'visitorCount' => $visitorCount
-    ]);
-})->name('berita');
-
-Route::get('/berita/{slug}', function ($slug) {
-    $today = Carbon::today()->toDateString();
-    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
-
-    $berita = \App\Models\Berita::where('slug', $slug)->firstOrFail();
-
-    return view('news-detail', [
-        'title' => 'Detail Berita', 
-        'berita' => $berita,
-        'visitorCount' => $visitorCount
-    ]);
-})->name('berita.detail');
-
-Route::get('/tentang', function () {
-    $today = Carbon::today()->toDateString();
-    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
-
-    return view('about', [
-        'title' => 'Tentang',
-        'visitorCount' => $visitorCount
-    ]);
-});
-
-Route::get('/kontak', function () {
-    $today = Carbon::today()->toDateString();
-    $visitorCount = Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
-
-    return view('contact', [
-        'title' => 'Kontak',
-        'visitorCount' => $visitorCount
-    ]);
+// ROUTE UNTUK SEMUA PENGGUNA (TANPA LOGIN) DENGAN MIDDLEWARE TRACK VISITORS
+Route::middleware('track.visitors')->group(function () {
+    Route::get('/', [VisitorController::class, 'index'])->name('home');
+    Route::get('/berita', [VisitorController::class, 'showNews'])->name('berita');
+    Route::get('/berita/{slug}', [VisitorController::class, 'showNewsDetail'])->name('berita.detail');
+    Route::get('/tentang', [VisitorController::class, 'showAbout'])->name('tentang');
+    Route::get('/kontak', [VisitorController::class, 'showContact'])->name('kontak');
 });
 
 // ROUTE UNTUK LOGIN DAN REGISTER
