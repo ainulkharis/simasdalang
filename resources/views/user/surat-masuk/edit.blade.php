@@ -28,7 +28,10 @@
 
         <!-- File PDF (Optional) -->
         <div class="mb-3">
-            <label for="file_pdf" class="form-label">Unggah Surat Masuk (Format PDF)</label>
+            <label for="file_pdf" class="form-label">
+                Unggah Surat Masuk 
+                <span class="format-pdf">(Format dalam bentuk PDF)</span>
+            </label>
             <input type="file" class="form-control" id="file_pdf" name="file_pdf" accept="application/pdf">
             @if ($suratMasuk->file_pdf)
                 <p class="mt-2">File saat ini: <a href="{{ Storage::url('public/' . $suratMasuk->file_pdf) }}" target="_blank">Lihat Surat Masuk</a></p>

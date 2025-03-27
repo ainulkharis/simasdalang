@@ -148,7 +148,11 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="photo" class="col-md-4 col-form-label text-md-end">Foto Profil</label>
+                    <label for="photo" class="col-md-4 col-form-label text-md-end">
+                        Foto Profil
+                        <br>
+                        <span class="max-image">(Format JPG, JPEG, PNG Maks. 1 MB)</span>
+                    </label>
 
                     <div class="col-md-6">
                         <input id="photo" type="file" class="form-control @error('photo') is-invalid @enderror" name="photo" onchange="previewImage(event)">

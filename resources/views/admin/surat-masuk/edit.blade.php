@@ -17,7 +17,10 @@
                 <form action="{{ route('admin.surat-masuk.balas', $surat_masuk->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label for="balasan_pdf" class="form-label">Kirim Surat Balasan (Format PDF)</label>
+                        <label for="balasan_pdf" class="form-label">
+                            Kirim Surat Balasan 
+                            <span class="format-pdf">(Format dalam bentuk PDF)</span>
+                        </label>
                         <input type="file" class="form-control" name="balasan_pdf" accept="application/pdf" required>
                         @error('balasan_pdf')
                             <div class="text-danger">{{ $message }}</div>

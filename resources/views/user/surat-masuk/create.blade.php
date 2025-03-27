@@ -19,7 +19,10 @@
             <input type="text" class="form-control" id="asal_pengirim" name="asal_pengirim" required>
         </div>
         <div class="mb-3">
-            <label for="file_pdf" class="form-label">Unggah Surat Masuk (Format PDF)</label>
+            <label for="file_pdf" class="form-label">
+                Unggah Surat Masuk 
+                <span class="format-pdf">(Format dalam bentuk PDF)</span>
+            </label>
             <input type="file" class="form-control" id="file_pdf" name="file_pdf" accept="application/pdf">
         </div>
         <button type="submit" class="btn btn-primary float-end">Simpan</button>

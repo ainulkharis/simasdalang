@@ -18386,3 +18386,15 @@ input[readonly] {
     opacity: 1; /* Pastikan opacity tidak berubah */
     cursor: not-allowed; /* Ubah cursor menjadi not-allowed */
 }
+
+.format-pdf {
+    font-size: 0.8em; /* Ukuran lebih kecil */
+    opacity: 0.6; /* Transparansi */
+    display: block; /* Pastikan teks ada di bawah */
+}
+
+.max-image {
+    font-size: 0.8em; /* Ukuran lebih kecil */
+    opacity: 0.6; /* Transparansi */
+    display: block; /* Pastikan teks ada di bawah */
+}

@@ -15,7 +15,10 @@
                 <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required>{{ $berita->deskripsi }}</textarea>
             </div>
             <div class="mb-3">
-                <label for="gambar" class="form-label">Gambar Berita</label>
+                <label for="gambar" class="form-label">
+                    Gambar Berita
+                    <span class="max-image">(Format JPG, JPEG, PNG Maks. 1 MB)</span>
+                </label>
                 <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*" onchange="previewImage(event)">
                 <!-- Tempat untuk menampilkan preview gambar -->
                 <div class="mt-3">

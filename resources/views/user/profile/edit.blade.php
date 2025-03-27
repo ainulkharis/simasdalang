@@ -72,7 +72,11 @@
 
                     <!-- Unggah Foto -->
                     <div class="mb-3">
-                        <label for="photo" class="form-label">Unggah Foto Profil</label>
+                        <label for="photo" class="form-label">
+                            Unggah Foto Profil
+                            <br>
+                            <span class="max-image">(Format JPG, JPEG, PNG Maks. 1 MB)</span>
+                        </label>
                         <input type="file" class="form-control" id="photo" name="photo" accept="image/*" onchange="previewImage(event)">
                         @if ($errors->has('photo'))
                             <div class="alert alert-danger">

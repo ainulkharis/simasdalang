@@ -39,7 +39,7 @@
 
                 @if(auth()->user()->role == 'admin')
                     {{-- Sidebar untuk Admin --}}
-                    <li class="sidebar-item {{ request()->is('admin/dashboard*') ? 'active' : '' }}">
+                    <li class="sidebar-item {{ request()->is('admin/dashboard*') || request()->is('admin/visitors*') ? 'active' : '' }}">
                         <a href="/admin/dashboard" class="sidebar-link">
                             <i class="bi bi-house-door"></i>
                             <span>Dashboard</span>

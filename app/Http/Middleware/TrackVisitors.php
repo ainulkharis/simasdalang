@@ -14,28 +14,26 @@ class TrackVisitors
     {
         $today = Carbon::today()->toDateString(); // Ambil tanggal hari ini
 
-        $visitorIp = $request->ip(); // Ambil IP pengguna
-        $hashedIp = hash('sha256', $visitorIp); // Hash IP pengguna
+        // Ambil IP pengunjung (support proxy dan Cloudflare)
+        $ip = $request->header('CF-Connecting-IP') ?: ($request->header('X-Forwarded-For') ?: $request->ip());
 
-        // Cek apakah sudah ada record untuk hari ini
-        $visitor = Visitor::where('visit_date', $today)->first();
+        // Ambil IP pertama jika ada banyak (untuk X-Forwarded-For)
+        if (strpos($ip, ',') !== false) {
+            $ip = trim(explode(',', $ip)[0]);
+        }
+        $hashedIp = hash('sha256', $ip); // Hash IP pengguna
 
-        if (!$visitor) {
-            // Jika belum ada, buat record baru
-            Visitor::create([
-                'visit_date' => $today,
-                'visit_count' => 1, // Set visit_count ke 1
-                'visitor_ips' => $hashedIp, // Simpan IP pertama
-            ]);
-        } else {
-            // Jika sudah ada, periksa apakah IP sudah tercatat
-            $existingIps = explode(',', $visitor->visitor_ips ?? ''); // Ambil daftar IP yang sudah ada
-            if (!in_array($hashedIp, $existingIps)) {
-                $visitor->increment('visit_count'); // Tambahkan visit_count
-                $existingIps[] = $hashedIp; // Tambahkan IP baru ke daftar
-                $visitor->visitor_ips = implode(',', $existingIps); // Simpan daftar IP yang diperbarui
-                $visitor->save();
-            }
+        // Cek atau buat record pengunjung hari ini
+        $visitor = Visitor::firstOrCreate(
+            ['visit_date' => $today],
+            ['visit_count' => 0, 'visitor_ips' => '']
+        );
+
+        // Tambahkan hitungan jika IP baru
+        if (!str_contains($visitor->visitor_ips, $hashedIp)) {
+            $visitor->increment('visit_count');
+            $visitor->visitor_ips .= ($visitor->visitor_ips ? ',' : '') . $hashedIp;
+            $visitor->save();
         }
 
         return $next($request);

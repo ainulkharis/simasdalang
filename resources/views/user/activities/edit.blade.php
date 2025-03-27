@@ -34,7 +34,10 @@
 
                     <!-- Unggah Foto Kegiatan -->
                     <div class="mb-3">
-                        <label for="photo" class="form-label">Foto Kegiatan</label>
+                        <label for="photo" class="form-label">
+                            Foto Kegiatan
+                            <span class="max-image">(Format JPG, JPEG, PNG Maks. 1 MB)</span>
+                        </label>
                         <input type="file" class="form-control" id="photo" name="photo" accept="image/*" onchange="previewImage(event)">
                         
                         <!-- Preview Foto Kegiatan -->

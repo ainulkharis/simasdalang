@@ -51,8 +51,41 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- Pagination Manual -->
                         <div class="d-flex justify-content-center mt-4">
-                            {{ $visitors->links() }} <!-- Menampilkan pagination -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    {{-- Tombol Previous --}}
+                                    @if ($visitors->onFirstPage())
+                                        <li class="page-item disabled">
+                                            <span class="page-link">&laquo; Sebelumnya</span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $visitors->previousPageUrl() }}" rel="prev">&laquo; Sebelumnya</a>
+                                        </li>
+                                    @endif
+
+                                    {{-- Tombol Next --}}
+                                    @if ($visitors->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $visitors->nextPageUrl() }}" rel="next">Selanjutnya &raquo;</a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Selanjutnya &raquo;</span>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <!-- Informasi "Showing X to Y of Z results" -->
+                        <div class="text-center mt-3">
+                            <p class="text-muted">
+                                Menampilkan {{ $visitors->firstItem() }} - {{ $visitors->lastItem() }} dari {{ $visitors->total() }} data keseluruhan.
+                            </p>
                         </div>
                     </div>
                 </div>
