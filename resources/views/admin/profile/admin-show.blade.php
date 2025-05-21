@@ -68,6 +68,7 @@
                             <th class="text-center">Tanggal Kegiatan</th>
                             <th class="text-center">Deskripsi Kegiatan</th>
                             <th class="text-center">Foto Kegiatan</th>
+                            <th class="text-center">Nilai</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,6 +85,17 @@
                                              onclick="showPreview('{{ asset('storage/' . $activity->photo) }}')">
                                     @else
                                         Tidak ada foto
+                                    @endif
+                                </td>
+                                <td class="text-center align-middle">
+                                    @if (!$activity->sudah_dinilai)
+                                        <form action="{{ route('admin.activities.grade', $activity->id) }}" method="POST" class="d-flex justify-content-center">
+                                            @csrf
+                                            <input type="number" name="nilai" class="form-control form-control-sm me-2" style="width: 70px;" min="0" max="100" required>
+                                            <button type="submit" class="btn btn-sm btn-primary">Nilai</button>
+                                        </form>
+                                    @else
+                                        {{ $activity->nilai }} / 100
                                     @endif
                                 </td>
                             </tr>

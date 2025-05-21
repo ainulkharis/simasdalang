@@ -71,6 +71,17 @@ class VisitorController extends Controller
         ]);
     }
 
+    public function showRules()
+    {
+        $today = \Carbon\Carbon::today()->toDateString();
+        $visitorCount = \App\Models\Visitor::where('visit_date', $today)->value('visit_count') ?? 0;
+
+        return view('rules', [
+            'title' => 'Peraturan',
+            'visitorCount' => $visitorCount
+        ]);
+    }
+
     public function showVisitorStats()
     {
         // Ambil data pengunjung dengan pagination

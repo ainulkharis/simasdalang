@@ -48,10 +48,21 @@
         <!-- Navbar Menu -->
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a class="nav-link {{ ($title === "Home") ? 'active' : '' }}" href="/">Beranda<br></a></li>
-                <li><a class="nav-link {{ ($title === "Berita") ? 'active' : '' }}" href="/berita">Berita</a></li>
-                <li><a class="nav-link {{ ($title === "Tentang") ? 'active' : '' }}" href="/tentang">Tentang</a></li>
-                <li><a class="nav-link {{ ($title === "Kontak") ? 'active' : '' }}" href="/kontak">Kontak</a></li>
+                <li>
+                    <a class="nav-link {{ ($title === "Home") ? 'active' : '' }}" href="/">Beranda<br></a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title === "Peraturan") ? 'active' : '' }}" href="/peraturan">Peraturan</a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title === "Berita") ? 'active' : '' }}" href="/berita">Berita</a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title === "Tentang") ? 'active' : '' }}" href="/tentang">Tentang</a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title === "Kontak") ? 'active' : '' }}" href="/kontak">Kontak</a>
+                </li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>

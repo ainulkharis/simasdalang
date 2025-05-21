@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\View;
+use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Mengirimkan total user ke semua view
+        View::composer('*', function ($view) {
+            $view->with('totalUsers', User::count());
+        });
+
         // Custom email verification template
         VerifyEmail::toMailUsing(function ($notifiable, $verificationUrl) {
             return (new MailMessage)

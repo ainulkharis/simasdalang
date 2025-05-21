@@ -45,6 +45,7 @@
                                 <th class="text-center">Tanggal Kegiatan</th>
                                 <th class="text-center">Deskripsi Kegiatan</th>
                                 <th class="text-center">Foto Kegiatan</th>
+                                <th class="text-center">Nilai</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -60,21 +61,34 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <div class="d-inline-flex justify-content-center align-items-center">
-                                            <a href="{{ route('user.activities.edit', $activity->id) }}" class="btn btn-warning btn-sm d-flex align-items-center mx-1" style="line-height: 1;">
-                                                <i class="bi bi-pencil-square" style="font-size: 16px; vertical-align: middle;"></i>
-                                                <span class="ms-1" style="vertical-align: middle;">Edit</span>
-                                            </a>
+                                        @if($activity->sudah_dinilai)
+                                            {{ $activity->nilai }}/100
+                                        @else
+                                            Belum dinilai
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        @unless($activity->sudah_dinilai)
+                                            <div class="d-inline-flex justify-content-center align-items-center">
+                                                <a href="{{ route('user.activities.edit', $activity->id) }}" class="btn btn-warning btn-sm d-flex align-items-center mx-1" style="line-height: 1;">
+                                                    <i class="bi bi-pencil-square" style="font-size: 16px; vertical-align: middle;"></i>
+                                                    <span class="ms-1" style="vertical-align: middle;">Edit</span>
+                                                </a>
 
-                                            <form action="{{ route('user.activities.destroy', $activity->id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center mx-1" onclick="return confirmDelete(event, '{{ route('user.activities.destroy', $activity->id) }}')" style="line-height: 1;">
-                                                    <i class="bi bi-trash" style="font-size: 16px; vertical-align: middle;"></i>
-                                                    <span class="ms-1" style="vertical-align: middle;">Hapus</span>
-                                                </button>
-                                            </form>
-                                        </div>
+                                                <form action="{{ route('user.activities.destroy', $activity->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center mx-1" onclick="return confirmDelete(event, '{{ route('user.activities.destroy', $activity->id) }}')" style="line-height: 1;">
+                                                        <i class="bi bi-trash" style="font-size: 16px; vertical-align: middle;"></i>
+                                                        <span class="ms-1" style="vertical-align: middle;">Hapus</span>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @else
+                                            <span class="text-success" data-bs-toggle="tooltip" title="Kegiatan sudah dinilai">
+                                                <i class="bi bi-check-circle-fill" style="font-size: 1.5rem;"></i>
+                                            </span>
+                                        @endunless
                                     </td>
                                 </tr>
                             @endforeach
@@ -176,6 +190,14 @@
             }, 3000); // Hilang setelah 3 detik
         }
     };
+
+    // Tooltip untuk ikon ceklis
+    document.addEventListener("DOMContentLoaded", function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
 </script>
 
 <style>
@@ -188,6 +210,15 @@
     /* Optional: Atur lebar input pencarian */
     .datatable-search input {
         width: 200px; /* Sesuaikan lebar input */
+    }
+
+    /* CSS untuk ceklis penilaian */
+    .bi-check-circle-fill {
+        color: #28a745; /* Warna hijau Bootstrap */
+        transition: transform 0.2s;
+    }
+    .bi-check-circle-fill:hover {
+        transform: scale(1.2);
     }
 </style>
 @endsection

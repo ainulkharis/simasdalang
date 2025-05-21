@@ -14,11 +14,19 @@ class Activity extends Model
         'description',
         'photo',
         'user_id',
+        'nilai',
+        'sudah_dinilai',
     ];
 
     protected $casts = [
         'date' => 'date',
+        'nilai' => 'integer',
     ];
+
+    public function getFormattedDateAttribute()
+    {
+        return $this->date->format('d-m-Y');
+    }
 
     public function user()
     {

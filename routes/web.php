@@ -7,6 +7,7 @@ use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminSuratMasukController;
 use App\Http\Controllers\AdminBeritaController;
+use App\Http\Controllers\AdminActivityController;
 use App\Http\Controllers\VisitorController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,7 @@ Route::middleware('track.visitors')->group(function () {
     Route::get('/berita/{slug}', [VisitorController::class, 'showNewsDetail'])->name('berita.detail');
     Route::get('/tentang', [VisitorController::class, 'showAbout'])->name('tentang');
     Route::get('/kontak', [VisitorController::class, 'showContact'])->name('kontak');
+    Route::get('/peraturan', [VisitorController::class, 'showRules'])->name('peraturan');
 });
 
 // ROUTE UNTUK LOGIN DAN REGISTER
@@ -122,5 +124,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Route untuk statistik pengunjung
         Route::get('visitors', [VisitorController::class, 'showVisitorStats'])->name('visitors');
+
+        // Route untuk menilai kegiatan peserta
+        Route::post('activities/{activity}/grade', [AdminActivityController::class, 'grade'])->name('activities.grade');
     });
 });

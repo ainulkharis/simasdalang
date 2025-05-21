@@ -21,7 +21,8 @@
 
                     <div class="mb-3">
                         <label for="date" class="form-label">Tanggal Kegiatan</label>
-                        <input type="date" class="form-control" id="date" name="date" required>
+                        <div class="form-control bg-light">{{ $currentDate }}</div>
+                        <input type="hidden" name="date" value="{{ now()->format('d-m-Y') }}">
                     </div>
 
                     <div class="mb-3">
@@ -72,5 +73,13 @@
             preview.style.display = 'none'; // Sembunyikan elemen preview jika tidak ada file
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Nonaktifkan input date jika ada (sebagai pengaman tambahan)
+        const dateInput = document.getElementById('date');
+        if (dateInput) {
+            dateInput.disabled = true;
+        }
+    });
 </script>
 @endsection

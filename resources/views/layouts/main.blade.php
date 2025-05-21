@@ -27,11 +27,11 @@
   <!-- Main CSS File -->
   <link href="{{ ('assets/css/main.css') }}" rel="stylesheet">
 </head>
-<body class="index-page">
+<body class="index-page d-flex flex-column min-vh-100">
 
   @include('partials.navbar')
 
-  <main class="main">
+  <main class="main flex-grow-1">
     <div class="container mt-4">
         @yield('content')
     </div>
@@ -40,12 +40,16 @@
   <footer id="footer" class="footer">
     <div class="container">
       <div class="copyright flex-c text-center">
-        {{-- <p>© <span>Copyright</span><strong class="px-1 sitename">Simasdalang</strong><span>All Rights Reserved</span></p> --}}
         <p>{{ date('Y') }} &copy;<strong class="px-1 sitename">Simasdalang -</strong>Dinkominfotik Kab. Brebes</p>
       </div>
-      <div class="text-center mt-2">
-        <p>
-          <i class="bi bi-bar-chart" style="font-size: 1rem; color: #007bff;"></i> Jumlah Kunjungan Hari Ini: {{ $visitorCount ?? 0 }}
+      <div class="d-flex flex-column flex-md-row justify-content-center align-items-center text-center mt-2">
+        <p class="mb-0 me-md-3">
+          <i class="bi bi-people-fill" style="font-size: 1rem; color: #28a745;"></i>
+          Total Peserta Terdaftar: {{ $totalUsers ?? 0 }}
+        </p>
+        <p class="mb-0">
+          <i class="bi bi-bar-chart" style="font-size: 1rem; color: #007bff;"></i>
+          Jumlah Kunjungan Hari Ini: {{ $visitorCount ?? 0 }}
         </p>
       </div>
       {{-- <div class="social-links d-flex justify-content-center">
@@ -54,13 +58,6 @@
         <a href=""><i class="bi bi-instagram"></i></a>
         <a href=""><i class="bi bi-linkedin"></i></a>
       </div> --}}
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        {{-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> --}}
-      </div>
     </div>
   </footer>
 

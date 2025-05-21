@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/error.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/iconly.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@7.0.0/dist/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">

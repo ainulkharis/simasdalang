@@ -23,7 +23,8 @@
                     <!-- Tanggal Kegiatan -->
                     <div class="mb-3">
                         <label for="date" class="form-label">Tanggal Kegiatan</label>
-                        <input type="date" class="form-control" id="date" name="date" value="{{ $activity->date->format('Y-m-d') }}" required>
+                        <div class="form-control bg-light">{{ $activity->date->format('d-m-Y') }}</div>
+                        <input type="hidden" name="date" value="{{ $activity->date->format('d-m-Y') }}">
                     </div>
 
                     <!-- Deskripsi Kegiatan -->
@@ -78,5 +79,13 @@
             preview.style.display = "{{ $activity->photo ? 'block' : 'none' }}";
         }
     }
+
+    // Nonaktifkan input date jika ada (sebagai pengaman tambahan)
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateInput = document.getElementById('date');
+        if (dateInput) {
+            dateInput.disabled = true;
+        }
+    });
 </script>
 @endsection
