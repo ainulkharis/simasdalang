@@ -13,8 +13,8 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         // Foto default hanya digunakan untuk ditampilkan, bukan untuk diubah di database
-        $userPhotoPath = $user->photo 
-            ? asset('storage/' . $user->photo) 
+        $userPhotoPath = $user->photo
+            ? asset('storage/' . $user->photo)
             : asset('assets/compiled/jpg/profile.jpg');
 
         return view('user.profile.index', ['user' => $user, 'userPhotoPath' => $userPhotoPath]);
@@ -30,6 +30,11 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
+        // Cek apakah profil terkunci
+        if ($user->is_profile_locked) {
+            return redirect()->route('user.profile.index')->with('error', 'Profil Anda telah dikunci oleh pembimbing dan tidak dapat diubah.');
+        }
+
         $request->validate([
             'place_birth' => 'nullable|string|max:255',
             'date_birth' => 'nullable|date',
@@ -43,7 +48,7 @@ class ProfileController extends Controller
         ]);
 
         if ($request->hasFile('photo')) {
-            
+
             // Hapus foto lama jika ada
             if ($user->photo && Storage::disk('public')->exists($user->photo)) {
                 Storage::disk('public')->delete($user->photo);

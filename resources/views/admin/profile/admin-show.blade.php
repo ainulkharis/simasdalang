@@ -27,6 +27,20 @@
 
     <div class="card shadow-sm border-0 rounded">
         <div class="card-body position-relative">
+
+            {{-- Tombol Kunci Profil --}}
+            @if($user->role === 'user')
+                <div class="position-absolute top-0 end-0 mt-3 me-3">
+                    <form action="{{ route('admin.profile.toggle-lock', $user) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-sm {{ $user->is_profile_locked ? 'btn-success' : 'btn-warning' }}">
+                            <i class="bi {{ $user->is_profile_locked ? 'bi-unlock' : 'bi-lock' }}"></i>
+                            {{ $user->is_profile_locked ? 'Buka Kunci' : 'Kunci Profil' }}
+                        </button>
+                    </form>
+                </div>
+            @endif
+
             <div class="text-center mb-4" style="margin-top: -50px;">
                 <div class="profile-picture-frame">
                     <!-- Tampilkan foto profil, jika tidak ada gunakan foto default -->

@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminSuratMasukController;
 use App\Http\Controllers\AdminBeritaController;
 use App\Http\Controllers\AdminActivityController;
 use App\Http\Controllers\VisitorController;
+use App\Http\Controllers\AdminProfileLockController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -127,5 +128,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Route untuk menilai kegiatan peserta
         Route::post('activities/{activity}/grade', [AdminActivityController::class, 'grade'])->name('activities.grade');
+
+        // Route untuk mengunci atau membuka profil peserta
+        Route::post('profile/{user}/toggle-lock', [AdminProfileLockController::class, 'toggleLock'])
+            ->name('profile.toggle-lock');
     });
 });

@@ -35,6 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'internship_end',
         'photo',
         'role',
+        'is_profile_locked',
     ];
 
     /**
@@ -58,6 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'date_birth' => 'date',
         'internship_start' => 'date',
         'internship_end' => 'date',
+        'is_profile_locked' => 'boolean',
     ];
 
     public function activities()

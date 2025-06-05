@@ -26,6 +26,14 @@
     </div>
     <div class="card shadow-sm border-0 rounded">
         <div class="card-body position-relative">
+
+            {{-- Notifikasi Profil Terkunci --}}
+            @if($user->is_profile_locked)
+                <div class="alert alert-warning">
+                    <i class="bi bi-lock-fill"></i> Profil Anda telah dikunci oleh pembimbing dan tidak dapat diubah.
+                </div>
+            @endif
+
             <div class="text-center mb-4" style="margin-top: -50px;">
                 <div class="profile-picture-frame">
                     <img src="{{ asset($userPhotoPath) }}" alt="Foto Profil" class="profile-picture">

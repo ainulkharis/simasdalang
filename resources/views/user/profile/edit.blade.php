@@ -6,94 +6,100 @@
         <div class="card">
             <div class="card-body">
                 <h3 class="mb-3">Edit Data Profil</h3>
-                <form action="{{ route('user.profile.update') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-
-                    <!-- Nama -->
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}">
+                @if($user->is_profile_locked)
+                    <div class="alert alert-warning">
+                        <i class="bi bi-lock-fill"></i> Profil Anda telah dikunci oleh pembimbing dan tidak dapat diubah.
                     </div>
+                @else
+                    <form action="{{ route('user.profile.update') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
 
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" disabled>
-                    </div>
-
-                    <!-- Tempat Lahir -->
-                    <div class="mb-3">
-                        <label for="place_birth" class="form-label">Tempat Lahir</label>
-                        <input type="text" class="form-control" id="place_birth" name="place_birth" value="{{ old('place_birth', $user->place_birth) }}">
-                    </div>
-
-                    <!-- Tanggal Lahir -->
-                    <div class="mb-3">
-                        <label for="date_birth" class="form-label">Tanggal Lahir</label>
-                        <input type="date" class="form-control" id="date_birth" name="date_birth" value="{{ $user->date_birth ? \Carbon\Carbon::parse($user->date_birth)->format('Y-m-d') : '' }}">
-                    </div>
-
-                    <!-- Alamat -->
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Alamat</label>
-                        <textarea class="form-control" id="address" name="address" rows="3">{{ old('address', $user->address) }}</textarea>
-                    </div>
-
-                    <!-- Nomor Telepon -->
-                    <div class="mb-3">
-                        <label for="phone_number" class="form-label">Nomor Telepon</label>
-                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}">
-                    </div>
-
-                    <!-- Sekolah -->
-                    <div class="mb-3">
-                        <label for="school" class="form-label">Sekolah/Kuliah</label>
-                        <input type="text" class="form-control" id="school" name="school" value="{{ old('school', $user->school) }}">
-                    </div>
-
-                    <!-- Jurusan -->
-                    <div class="mb-3">
-                        <label for="major" class="form-label">Jurusan/Prodi</label>
-                        <input type="text" class="form-control" id="major" name="major" value="{{ old('major', $user->major) }}">
-                    </div>
-
-                    <!-- Tanggal Mulai Magang -->
-                    <div class="mb-3">
-                        <label for="internship_start" class="form-label">Mulai Magang</label>
-                        <input type="date" class="form-control" id="internship_start" name="internship_start" value="{{ $user->internship_start ? \Carbon\Carbon::parse($user->internship_start)->format('Y-m-d') : '' }}">
-                    </div>
-
-                    <!-- Tanggal Selesai Magang -->
-                    <div class="mb-3">
-                        <label for="internship_end" class="form-label">Selesai Magang</label>
-                        <input type="date" class="form-control" id="internship_end" name="internship_end" value="{{ $user->internship_end ? \Carbon\Carbon::parse($user->internship_end)->format('Y-m-d') : '' }}">
-                    </div>
-
-                    <!-- Unggah Foto -->
-                    <div class="mb-3">
-                        <label for="photo" class="form-label">
-                            Unggah Foto Profil
-                            <br>
-                            <span class="max-image">(Format JPG, JPEG, PNG Maks. 1 MB)</span>
-                        </label>
-                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*" onchange="previewImage(event)">
-                        @if ($errors->has('photo'))
-                            <div class="alert alert-danger">
-                                {{ $errors->first('photo') }}
-                            </div>
-                        @endif
-
-                        <!-- Preview Foto Profil -->
-                        <div class="mt-3">
-                            <p>Preview Foto Profil:</p>
-                            <img id="preview" src="{{ $user->photo ? asset('storage/' . $user->photo) : '#' }}" alt="Preview Foto Profil" class="img-thumbnail" style="width: 150px; {{ $user->photo ? '' : 'display: none;' }}">
+                        <!-- Nama -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}">
                         </div>
-                    </div>
 
-                    <!-- Tombol Submit -->
-                    <button type="submit" class="btn btn-primary float-end">Simpan Perubahan</button>
-                </form>
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" disabled>
+                        </div>
+
+                        <!-- Tempat Lahir -->
+                        <div class="mb-3">
+                            <label for="place_birth" class="form-label">Tempat Lahir</label>
+                            <input type="text" class="form-control" id="place_birth" name="place_birth" value="{{ old('place_birth', $user->place_birth) }}">
+                        </div>
+
+                        <!-- Tanggal Lahir -->
+                        <div class="mb-3">
+                            <label for="date_birth" class="form-label">Tanggal Lahir</label>
+                            <input type="date" class="form-control" id="date_birth" name="date_birth" value="{{ $user->date_birth ? \Carbon\Carbon::parse($user->date_birth)->format('Y-m-d') : '' }}">
+                        </div>
+
+                        <!-- Alamat -->
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Alamat</label>
+                            <textarea class="form-control" id="address" name="address" rows="3">{{ old('address', $user->address) }}</textarea>
+                        </div>
+
+                        <!-- Nomor Telepon -->
+                        <div class="mb-3">
+                            <label for="phone_number" class="form-label">Nomor Telepon</label>
+                            <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}">
+                        </div>
+
+                        <!-- Sekolah -->
+                        <div class="mb-3">
+                            <label for="school" class="form-label">Sekolah/Kuliah</label>
+                            <input type="text" class="form-control" id="school" name="school" value="{{ old('school', $user->school) }}">
+                        </div>
+
+                        <!-- Jurusan -->
+                        <div class="mb-3">
+                            <label for="major" class="form-label">Jurusan/Prodi</label>
+                            <input type="text" class="form-control" id="major" name="major" value="{{ old('major', $user->major) }}">
+                        </div>
+
+                        <!-- Tanggal Mulai Magang -->
+                        <div class="mb-3">
+                            <label for="internship_start" class="form-label">Mulai Magang</label>
+                            <input type="date" class="form-control" id="internship_start" name="internship_start" value="{{ $user->internship_start ? \Carbon\Carbon::parse($user->internship_start)->format('Y-m-d') : '' }}">
+                        </div>
+
+                        <!-- Tanggal Selesai Magang -->
+                        <div class="mb-3">
+                            <label for="internship_end" class="form-label">Selesai Magang</label>
+                            <input type="date" class="form-control" id="internship_end" name="internship_end" value="{{ $user->internship_end ? \Carbon\Carbon::parse($user->internship_end)->format('Y-m-d') : '' }}">
+                        </div>
+
+                        <!-- Unggah Foto -->
+                        <div class="mb-3">
+                            <label for="photo" class="form-label">
+                                Unggah Foto Profil
+                                <br>
+                                <span class="max-image">(Format JPG, JPEG, PNG Maks. 1 MB)</span>
+                            </label>
+                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*" onchange="previewImage(event)">
+                            @if ($errors->has('photo'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('photo') }}
+                                </div>
+                            @endif
+
+                            <!-- Preview Foto Profil -->
+                            <div class="mt-3">
+                                <p>Preview Foto Profil:</p>
+                                <img id="preview" src="{{ $user->photo ? asset('storage/' . $user->photo) : '#' }}" alt="Preview Foto Profil" class="img-thumbnail" style="width: 150px; {{ $user->photo ? '' : 'display: none;' }}">
+                            </div>
+                        </div>
+
+                        <!-- Tombol Submit -->
+                        <button type="submit" class="btn btn-primary float-end">Simpan Perubahan</button>
+                    </form>
+                @endif
             </div>
         </div>
     </div>
