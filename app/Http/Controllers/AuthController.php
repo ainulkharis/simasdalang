@@ -78,17 +78,6 @@ class AuthController extends Controller
             'password.confirmed' => 'Konfirmasi password tidak cocok.'
         ]);
 
-        // Validasi email menggunakan Abstract API
-        // $emailValidationService = new EmailValidationService();
-        // $validationResult = $emailValidationService->validateEmail($request->email);
-
-        // // Cek hasil validasi
-        // if ($validationResult['deliverability'] !== 'DELIVERABLE' || $validationResult['is_valid_format']['value'] !== true) {
-        //     return back()->withErrors([
-        //         'email' => 'Email tidak valid, silahkan gunakan email lain.',
-        //     ])->onlyInput('email');
-        // }
-
         // Membuat user baru
         $user = User::create([
             'name' => $request->name,
